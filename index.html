@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pasaporte de Hobbies</title>
+<meta name="description" content="Un hobby nuevo cada semana, una cápsula cada día.">
+<meta name="theme-color" content="#b85c38">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<style>
+  :root {
+    --papel: #faf5ec;
+    --papel-card: #ffffff;
+    --tinta: #2e2a24;
+    --tinta-suave: #7a7266;
+    --acento: #b85c38;
+    --acento-suave: #f3e2d8;
+    --exito: #5a6e5a;
+    --borde: #e8e0d2;
+    --sombra: 0 2px 12px rgba(46, 42, 36, 0.08);
+    --radio: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    padding-bottom: 90px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  h1, h2, h3, .brand { font-family: Georgia, "Times New Roman", serif; }
+
+  header {
+    padding: 22px 20px 14px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .brand { font-size: 1.25rem; letter-spacing: .2px; }
+  .brand small { display: block; font-family: -apple-system, "Segoe UI", sans-serif; font-size: .72rem; color: var(--tinta-suave); letter-spacing: .8px; text-transform: uppercase; }
+  .streak {
+    background: var(--papel-card); border: 1px solid var(--borde); border-radius: 999px;
+    padding: 6px 14px; font-size: .85rem; font-weight: 600; box-shadow: var(--sombra); white-space: nowrap;
+  }
+
+  .demo-banner {
+    margin: 0 20px 10px; padding: 8px 14px; border-radius: 10px;
+    background: #fff3cd; border: 1px dashed #d4b106; font-size: .78rem; color: #6b5900;
+  }
+
+  main { padding: 0 20px; }
+
+  .card {
+    background: var(--papel-card); border: 1px solid var(--borde);
+    border-radius: var(--radio); box-shadow: var(--sombra);
+    padding: 20px; margin-bottom: 16px;
+  }
+
+  .tema-header { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+  .tema-emoji {
+    font-size: 1.9rem; width: 58px; height: 58px; flex: 0 0 58px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--acento-suave); border-radius: 14px;
+  }
+  .tema-header h2 { font-size: 1.3rem; line-height: 1.2; }
+  .tema-header p { font-size: .82rem; color: var(--tinta-suave); }
+  .cambiar-tema {
+    margin-top: 12px; width: 100%;
+    background: none; border: 1.5px dashed var(--borde); border-radius: 10px;
+    padding: 9px; font-size: .82rem; color: var(--tinta-suave); cursor: pointer;
+  }
+  .cambiar-tema:active { background: var(--acento-suave); }
+
+  .dia-chip {
+    display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .8px;
+    text-transform: uppercase; color: var(--acento);
+    background: var(--acento-suave); border-radius: 999px; padding: 3px 12px; margin-bottom: 10px;
+  }
+  .capsula h2 { font-size: 1.35rem; line-height: 1.3; margin-bottom: 14px; }
+  .seccion { margin-bottom: 16px; }
+  .seccion .etiqueta {
+    font-size: .72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--tinta-suave); margin-bottom: 4px;
+  }
+  .seccion p { font-size: .95rem; }
+  .dato-box, .reto-box { border-radius: 12px; padding: 14px 16px; }
+  .dato-box { background: #f0ede4; }
+  .reto-box { background: var(--acento-suave); }
+
+  .btn {
+    display: block; width: 100%; text-align: center; border: none; cursor: pointer;
+    border-radius: 12px; padding: 14px; font-size: .95rem; font-weight: 700;
+    font-family: inherit; text-decoration: none;
+  }
+  .btn-primario { background: var(--acento); color: #fff; }
+  .btn-primario:active { filter: brightness(.92); }
+  .btn-hecho { background: var(--exito); color: #fff; }
+  .btn-secundario { background: none; border: 1.5px solid var(--borde); color: var(--tinta); margin-top: 10px; }
+  .btn + .btn { margin-top: 10px; }
+
+  /* Semana */
+  .dia-fila {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--papel-card); border: 1px solid var(--borde); border-radius: 14px;
+    padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+  }
+  .dia-fila.bloqueado { opacity: .5; cursor: default; }
+  .dia-fila .num {
+    width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%;
+    background: var(--acento-suave); color: var(--acento);
+    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .8rem;
+  }
+  .dia-fila.leida .num { background: var(--exito); color: #fff; }
+  .dia-fila .info { flex: 1; min-width: 0; }
+  .dia-fila .info .nombre { font-weight: 600; font-size: .9rem; }
+  .dia-fila .info .sub { font-size: .78rem; color: var(--tinta-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dia-fila .estado { font-size: 1.1rem; }
+
+  /* Quiz */
+  .pregunta { margin-bottom: 22px; }
+  .pregunta h3 { font-size: 1rem; margin-bottom: 10px; }
+  .opcion {
+    display: block; width: 100%; text-align: left; cursor: pointer;
+    background: var(--papel); border: 1.5px solid var(--borde); border-radius: 10px;
+    padding: 11px 14px; margin-bottom: 8px; font-size: .9rem; font-family: inherit; color: var(--tinta);
+  }
+  .opcion.elegida { border-color: var(--acento); background: var(--acento-suave); font-weight: 600; }
+  .opcion.correcta { border-color: var(--exito); background: #e7efe7; font-weight: 600; }
+  .opcion.incorrecta { border-color: #c0392b; background: #f9e5e2; }
+
+  .resultado-quiz { text-align: center; padding: 10px 0; }
+  .resultado-quiz .puntaje { font-size: 2.6rem; font-family: Georgia, serif; }
+
+  /* Pasaporte */
+  .pasaporte-head { text-align: center; padding: 8px 0 18px; }
+  .pasaporte-head h2 { font-size: 1.5rem; }
+  .pasaporte-head p { color: var(--tinta-suave); font-size: .85rem; }
+  .stats { display: flex; gap: 10px; margin-bottom: 16px; }
+  .stat { flex: 1; text-align: center; background: var(--papel-card); border: 1px solid var(--borde); border-radius: 14px; padding: 14px 6px; }
+  .stat .n { font-size: 1.5rem; font-family: Georgia, serif; }
+  .stat .l { font-size: .7rem; color: var(--tinta-suave); text-transform: uppercase; letter-spacing: .6px; }
+  .sello { display: flex; align-items: center; gap: 14px; }
+  .sello + .sello { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--borde); }
+  .sello .emoji { font-size: 1.7rem; width: 52px; height: 52px; flex: 0 0 52px; display: flex; align-items: center; justify-content: center; background: var(--acento-suave); border-radius: 50%; }
+  .sello .detalle { flex: 1; }
+  .sello .detalle .nombre { font-weight: 700; font-size: .95rem; }
+  .sello .detalle .nivel { font-size: .78rem; color: var(--tinta-suave); }
+  .barra { height: 6px; background: var(--borde); border-radius: 99px; margin-top: 6px; overflow: hidden; }
+  .barra div { height: 100%; background: var(--acento); border-radius: 99px; }
+  .insignia-tag { font-size: 1.4rem; }
+
+  .celebracion { text-align: center; background: var(--acento-suave); border: 1.5px solid var(--acento); }
+  .celebracion .grande { font-size: 2.6rem; }
+
+  .vacio { text-align: center; padding: 40px 20px; color: var(--tinta-suave); }
+  .vacio .grande { font-size: 2.6rem; margin-bottom: 10px; }
+
+  /* Nav */
+  nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    max-width: 560px; margin: 0 auto;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(8px);
+    border-top: 1px solid var(--borde);
+    display: flex; padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  nav button {
+    flex: 1; background: none; border: none; cursor: pointer; font-family: inherit;
+    padding: 8px 4px; border-radius: 12px; color: var(--tinta-suave); font-size: .7rem; font-weight: 600;
+  }
+  nav button .ic { display: block; font-size: 1.3rem; margin-bottom: 2px; }
+  nav button.activo { color: var(--acento); background: var(--acento-suave); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Pasaporte de Hobbies<small>tu sensei semanal</small></div>
+  <div class="streak" id="streak"></div>
+</header>
+<div id="demo-banner"></div>
+<main id="main"></main>
+<nav>
+  <button id="nav-hoy" onclick="irA('hoy')"><span class="ic">☀️</span>Hoy</button>
+  <button id="nav-semana" onclick="irA('semana')"><span class="ic">🗓️</span>Semana</button>
+  <button id="nav-pasaporte" onclick="irA('pasaporte')"><span class="ic">📔</span>Pasaporte</button>
+</nav>
+
+<script src="packs.js"></script>
+<script>
+/* ============ Estado ============ */
+const CLAVE = "sensei_estado_v1";
+const DEMO = new URLSearchParams(location.search).has("demo");
+const DIAS_NOMBRE = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+
+let estado = cargarEstado();
+let vista = "hoy";
+let diaVisto = null; // override al tocar un día en Semana
+
+function cargarEstado() {
+  try { return JSON.parse(localStorage.getItem(CLAVE)) || {}; } catch (e) { return {}; }
+}
+function defecto(e) {
+  e.leidas = e.leidas || {};      // "packId:track:dia" -> true
+  e.quiz = e.quiz || {};          // "packId:track" -> {mejor, pasado}
+  e.insignias = e.insignias || [];// [{emoji, nombre, tema, fecha}]
+  e.trackElegido = e.trackElegido || {}; // packId -> "A"|"B"
+  e.racha = e.racha || { n: 0, ultima: null };
+  return e;
+}
+estado = defecto(estado);
+function guardar() { localStorage.setItem(CLAVE, JSON.stringify(estado)); }
+
+/* ============ Fechas ============ */
+function hoy() {
+  const d = new Date();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+function parseFecha(s) {
+  const [y, m, d] = s.split("-").map(Number);
+  return new Date(y, m - 1, d);
+}
+function fechaISO(d) {
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+}
+function diasEntre(a, b) { return Math.round((b - a) / 86400000); }
+
+/* ============ Racha ============ */
+function actualizarRacha() {
+  const h = fechaISO(hoy());
+  if (estado.racha.ultima === h) return;
+  const ayer = new Date(hoy()); ayer.setDate(ayer.getDate() - 1);
+  estado.racha.n = (estado.racha.ultima === fechaISO(ayer)) ? estado.racha.n + 1 : 1;
+  estado.racha.ultima = h;
+  guardar();
+}
+
+/* ============ Pack y track ============ */
+function packActual() {
+  const packs = (window.SENSEI_PACKS || []).slice().sort((a, b) => b.inicio.localeCompare(a.inicio));
+  const t = hoy();
+  for (const p of packs) {
+    const ini = parseFecha(p.inicio);
+    if (t >= ini && diasEntre(ini, t) <= 6) return p;
+  }
+  // si no hay semana activa: el más reciente ya empezado, o el primero futuro
+  for (const p of packs) if (t >= parseFecha(p.inicio)) return p;
+  return packs[packs.length - 1] || null;
+}
+function trackDe(pack) {
+  const id = estado.trackElegido[pack.id] || "A";
+  return { id, t: pack.tracks[id] };
+}
+function otroTrack(pack) {
+  const id = (estado.trackElegido[pack.id] || "A") === "A" ? "B" : "A";
+  return { id, t: pack.tracks[id] };
+}
+function indiceHoy(pack) { return diasEntre(parseFecha(pack.inicio), hoy()); }
+function desbloqueado(pack, i) {
+  if (DEMO) return true;
+  const idx = indiceHoy(pack);
+  return idx >= i;
+}
+function claveLeida(pack, trackId, i) { return pack.id + ":" + trackId + ":" + i; }
+
+/* ============ Link al sensei (claude.ai) ============ */
+function linkSensei(tema, titulo) {
+  const prompt = 'Actúa como mi "Sensei de Hobbies": cercano, curioso y nada académico. Esta semana estoy aprendiendo sobre ' + tema +
+    ' y hoy leí una cápsula titulada "' + titulo + '". Cuéntame más sobre ese tema, dame ejemplos memorables y termina con una pregunta que me haga pensar. ' +
+    'Contexto sobre mí: soy ingeniera mecánica, me encantan el anime y los documentales — úsalo para tus analogías.';
+  return "https://claude.ai/new?q=" + encodeURIComponent(prompt);
+}
+
+/* ============ Render ============ */
+function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+function md(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>"); }
+
+function irA(v) { vista = v; diaVisto = null; render(); window.scrollTo(0, 0); }
+
+function render() {
+  document.getElementById("streak").textContent = "🔥 " + estado.racha.n + (estado.racha.n === 1 ? " día" : " días");
+  document.getElementById("demo-banner").innerHTML = DEMO ? '<div class="demo-banner">🔧 Modo demo: todos los días desbloqueados (quita <b>?demo</b> de la URL para el modo real).</div>' : "";
+  ["hoy", "semana", "pasaporte"].forEach(v => document.getElementById("nav-" + v).classList.toggle("activo", v === vista));
+  const main = document.getElementById("main");
+  const pack = packActual();
+  if (!pack) { main.innerHTML = '<div class="vacio"><div class="grande">🌱</div>Aún no hay packs cargados.</div>'; return; }
+  if (vista === "hoy") main.innerHTML = vistaHoy(pack);
+  else if (vista === "semana") main.innerHTML = vistaSemana(pack);
+  else main.innerHTML = vistaPasaporte();
+}
+
+function cardTema(pack) {
+  const { t } = trackDe(pack);
+  const otro = otroTrack(pack);
+  return '<div class="card">' +
+    '<div class="tema-header"><div class="tema-emoji">' + t.emoji + '</div>' +
+    '<div><h2>' + esc(t.tema) + '</h2><p>' + esc(t.subtitulo) + '</p></div></div>' +
+    '<button class="cambiar-tema" onclick="cambiarTema()">🔄 ¿Otro tema esta semana? Cambiar a ' + otro.t.emoji + ' ' + esc(otro.t.tema) + '</button>' +
+    '</div>';
+}
+function cambiarTema() {
+  const pack = packActual();
+  estado.trackElegido[pack.id] = otroTrack(pack).id;
+  guardar(); diaVisto = null; render();
+}
+
+function vistaHoy(pack) {
+  let i = (diaVisto !== null) ? diaVisto : Math.min(Math.max(indiceHoy(pack), 0), 6);
+  if (!DEMO && indiceHoy(pack) < 0) {
+    return cardTema(pack) + '<div class="vacio"><div class="grande">⏳</div>Tu semana empieza el lunes ' + pack.inicio + '. ¡Prepárate!</div>';
+  }
+  if (!DEMO && indiceHoy(pack) > 6 && diaVisto === null) {
+    return cardTema(pack) + '<div class="vacio"><div class="grande">🎉</div>Semana completada. El sensei está preparando el próximo tema…<br><br>Mientras tanto, repasa la semana en 🗓️.</div>';
+  }
+  if (!desbloqueado(pack, i)) {
+    return cardTema(pack) + '<div class="vacio"><div class="grande">🔒</div>Esta cápsula se desbloquea el ' + DIAS_NOMBRE[i].toLowerCase() + '. ¡Paciencia, saltamontes!</div>';
+  }
+  if (i <= 4) return cardTema(pack) + vistaCapsula(pack, i);
+  if (i === 5) return cardTema(pack) + vistaQuiz(pack);
+  return cardTema(pack) + vistaBackstage(pack);
+}
+
+function vistaCapsula(pack, i) {
+  const { id: trackId, t } = trackDe(pack);
+  const c = t.dias[i];
+  const leida = !!estado.leidas[claveLeida(pack, trackId, i)];
+  return '<div class="card capsula">' +
+    '<span class="dia-chip">' + DIAS_NOMBRE[i] + ' · Cápsula ' + (i + 1) + ' de 5</span>' +
+    '<h2>' + esc(c.titulo) + '</h2>' +
+    '<div class="seccion"><div class="etiqueta">La idea</div><p>' + md(c.concepto) + '</p></div>' +
+    '<div class="seccion"><div class="etiqueta">La historia</div><p>' + md(c.historia) + '</p></div>' +
+    '<div class="seccion dato-box"><div class="etiqueta">💡 Dato para presumir</div><p>' + md(c.dato) + '</p></div>' +
+    '<div class="seccion reto-box"><div class="etiqueta">🎯 Mini-reto</div><p>' + md(c.reto) + '</p></div>' +
+    '<button class="btn ' + (leida ? "btn-hecho" : "btn-primario") + '" onclick="marcarLeida(' + i + ')">' +
+    (leida ? "✓ Aprendida" : "Marcar como aprendida") + '</button>' +
+    '<a class="btn btn-secundario" target="_blank" rel="noopener" href="' + linkSensei(t.tema, c.titulo) + '">💬 Pregúntale más al sensei</a>' +
+    '</div>';
+}
+function marcarLeida(i) {
+  const pack = packActual();
+  const { id: trackId } = trackDe(pack);
+  const k = claveLeida(pack, trackId, i);
+  estado.leidas[k] = !estado.leidas[k];
+  guardar(); render();
+}
+
+/* ============ Quiz ============ */
+let quizSel = {};
+function vistaQuiz(pack) {
+  const { id: trackId, t } = trackDe(pack);
+  const kq = pack.id + ":" + trackId;
+  const res = estado.quiz[kq];
+  let html = '<div class="card"><span class="dia-chip">Sábado · Quiz de la semana</span>' +
+    '<h2 style="font-family:Georgia,serif;font-size:1.3rem;margin-bottom:6px;">¿Cuánto aprendiste de ' + esc(t.tema.toLowerCase()) + '?</h2>' +
+    '<p style="font-size:.85rem;color:var(--tinta-suave);margin-bottom:18px;">Acierta 4 de 5 y ganas la insignia <b>' + t.emoji + ' ' + esc(t.insignia) + '</b> para tu pasaporte.</p>';
+  if (res && res.pasado) {
+    html += '<div class="resultado-quiz"><div class="puntaje">' + res.mejor + '/5</div><p>¡Insignia ganada! ' + t.emoji + ' Ya eres <b>' + esc(t.insignia) + '</b>.</p></div></div>';
+    return html;
+  }
+  t.quiz.preguntas.forEach((p, pi) => {
+    html += '<div class="pregunta"><h3>' + (pi + 1) + '. ' + esc(p.q) + '</h3>';
+    p.opciones.forEach((o, oi) => {
+      const sel = quizSel[pi] === oi ? " elegida" : "";
+      html += '<button class="opcion' + sel + '" onclick="elegir(' + pi + ',' + oi + ')">' + esc(o) + '</button>';
+    });
+    html += '</div>';
+  });
+  const listo = t.quiz.preguntas.every((_, pi) => quizSel[pi] !== undefined);
+  html += '<button class="btn btn-primario" ' + (listo ? "" : "disabled style='opacity:.4'") + ' onclick="calificar()">Calificar</button>';
+  if (res) html += '<p style="text-align:center;font-size:.8rem;color:var(--tinta-suave);margin-top:10px;">Mejor intento: ' + res.mejor + '/5 — ¡puedes reintentar!</p>';
+  html += '</div>';
+  return html;
+}
+function elegir(pi, oi) { quizSel[pi] = oi; render(); }
+function calificar() {
+  const pack = packActual();
+  const { id: trackId, t } = trackDe(pack);
+  const kq = pack.id + ":" + trackId;
+  let puntos = 0;
+  t.quiz.preguntas.forEach((p, pi) => { if (quizSel[pi] === p.correcta) puntos++; });
+  const prev = estado.quiz[kq] || { mejor: 0, pasado: false };
+  const pasado = puntos >= 4;
+  estado.quiz[kq] = { mejor: Math.max(prev.mejor, puntos), pasado: prev.pasado || pasado };
+  if (pasado && !prev.pasado) {
+    estado.insignias.push({ emoji: t.emoji, nombre: t.insignia, tema: t.tema, fecha: fechaISO(hoy()) });
+  }
+  guardar();
+  quizSel = {};
+  const main = document.getElementById("main");
+  if (pasado) {
+    main.innerHTML = cardTema(pack) +
+      '<div class="card celebracion"><div class="grande">' + t.emoji + '</div>' +
+      '<h2 style="margin:8px 0 4px;">¡' + puntos + '/5 — Insignia ganada!</h2>' +
+      '<p>Nuevo sello en tu pasaporte: <b>' + esc(t.insignia) + '</b></p>' +
+      '<button class="btn btn-primario" style="margin-top:14px" onclick="irA(\'pasaporte\')">Ver mi pasaporte 📔</button></div>';
+    window.scrollTo(0, 0);
+  } else {
+    main.innerHTML = cardTema(pack) +
+      '<div class="card" style="text-align:center;"><div class="resultado-quiz"><div class="puntaje">' + puntos + '/5</div>' +
+      '<p>Casi… necesitas 4 para la insignia. Repasa las cápsulas y reintenta — el sensei cree en ti 🙏</p></div>' +
+      '<button class="btn btn-primario" onclick="diaVisto=5;render();window.scrollTo(0,0)">Reintentar</button>' +
+      '<button class="btn btn-secundario" onclick="irA(\'semana\')">Repasar la semana</button></div>';
+    window.scrollTo(0, 0);
+  }
+}
+
+/* ============ Backstage ============ */
+function vistaBackstage(pack) {
+  const { t } = trackDe(pack);
+  const b = t.backstage;
+  const item = (ic, tipo, x) => '<div class="seccion dato-box"><div class="etiqueta">' + ic + ' ' + tipo + '</div>' +
+    '<p><b>' + esc(x.titulo) + '</b><br><span style="font-size:.88rem;">' + esc(x.nota) + '</span></p></div>';
+  return '<div class="card"><span class="dia-chip">Domingo · Backstage</span>' +
+    '<h2 style="font-family:Georgia,serif;font-size:1.3rem;margin-bottom:14px;">Para gozarte el tema sin leer nada</h2>' +
+    item("🎬", "Documental", b.documental) +
+    item("🎌", "Anime", b.anime) +
+    item("🎵", "Música", b.musica) +
+    '<p style="font-size:.85rem;color:var(--tinta-suave);text-align:center;margin-top:6px;">Mañana empieza un tema nuevo ✨</p></div>';
+}
+
+/* ============ Semana ============ */
+function vistaSemana(pack) {
+  const { id: trackId, t } = trackDe(pack);
+  let html = cardTema(pack);
+  const nombres = t.dias.map(d => d.titulo).concat(["Quiz de la semana", "Backstage: documental, anime y música"]);
+  for (let i = 0; i < 7; i++) {
+    const abierto = desbloqueado(pack, i);
+    const leida = i <= 4 && estado.leidas[claveLeida(pack, trackId, i)];
+    const kq = pack.id + ":" + trackId;
+    const quizOk = i === 5 && estado.quiz[kq] && estado.quiz[kq].pasado;
+    const icono = !abierto ? "🔒" : (leida || quizOk) ? "✅" : (i === 5 ? "📝" : i === 6 ? "🍿" : "📖");
+    html += '<div class="dia-fila' + (abierto ? "" : " bloqueado") + (leida || quizOk ? " leida" : "") + '"' +
+      (abierto ? ' onclick="verDia(' + i + ')"' : "") + '>' +
+      '<div class="num">' + DIAS_NOMBRE[i].slice(0, 3) + '</div>' +
+      '<div class="info"><div class="nombre">' + (i === 5 ? "Quiz 📝" : i === 6 ? "Backstage 🍿" : "Cápsula " + (i + 1)) + '</div>' +
+      '<div class="sub">' + esc(nombres[i]) + '</div></div>' +
+      '<div class="estado">' + icono + '</div></div>';
+  }
+  return html;
+}
+function verDia(i) { vista = "hoy"; diaVisto = i; render(); window.scrollTo(0, 0); }
+
+/* ============ Pasaporte ============ */
+function vistaPasaporte() {
+  const packs = window.SENSEI_PACKS || [];
+  let capsulas = Object.values(estado.leidas).filter(Boolean).length;
+  let html = '<div class="pasaporte-head"><h2>📔 Pasaporte de Cami</h2><p>Coleccionista de hobbies desde 2026</p></div>';
+  html += '<div class="stats">' +
+    '<div class="stat"><div class="n">🔥 ' + estado.racha.n + '</div><div class="l">racha</div></div>' +
+    '<div class="stat"><div class="n">' + capsulas + '</div><div class="l">cápsulas</div></div>' +
+    '<div class="stat"><div class="n">' + estado.insignias.length + '</div><div class="l">insignias</div></div></div>';
+
+  // Sellos por tema explorado
+  let sellos = "";
+  packs.forEach(p => {
+    ["A", "B"].forEach(trackId => {
+      const t = p.tracks[trackId];
+      const leidas = t.dias.filter((_, i) => estado.leidas[claveLeida(p, trackId, i)]).length;
+      const kq = p.id + ":" + trackId;
+      const quizOk = estado.quiz[kq] && estado.quiz[kq].pasado;
+      if (leidas === 0 && !quizOk) return;
+      const nivel = quizOk ? "Conocedora ✨" : leidas >= 5 ? "Aprendiz" : "Curiosa";
+      const prog = Math.round(((leidas + (quizOk ? 1 : 0)) / 6) * 100);
+      sellos += '<div class="sello"><div class="emoji">' + t.emoji + '</div>' +
+        '<div class="detalle"><div class="nombre">' + esc(t.tema) + '</div>' +
+        '<div class="nivel">' + nivel + ' · ' + leidas + '/5 cápsulas' + (quizOk ? " · quiz ✓" : "") + '</div>' +
+        '<div class="barra"><div style="width:' + prog + '%"></div></div></div>' +
+        (quizOk ? '<div class="insignia-tag">🏅</div>' : "") + '</div>';
+    });
+  });
+  html += '<div class="card">' + (sellos || '<div class="vacio" style="padding:16px;"><div class="grande">🌱</div>Tu colección empieza con la primera cápsula…</div>') + '</div>';
+
+  if (estado.insignias.length) {
+    html += '<div class="card"><div class="etiqueta" style="font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:10px;">🏅 Insignias ganadas</div>';
+    estado.insignias.forEach(b => {
+      html += '<div class="sello"><div class="emoji">' + b.emoji + '</div><div class="detalle"><div class="nombre">' + esc(b.nombre) + '</div><div class="nivel">' + esc(b.tema) + ' · ' + b.fecha + '</div></div></div>';
+    });
+    html += '</div>';
+  }
+  return html;
+}
+
+/* ============ Inicio ============ */
+actualizarRacha();
+render();
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  navigator.serviceWorker.register("sw.js").catch(() => {});
+}
+</script>
+</body>
+</html>
