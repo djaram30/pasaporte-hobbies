@@ -1,15 +1,21 @@
-# 📔 Pasaporte de Hobbies — App
+# 🐾 Expediciones con Lucio — App (V2)
 
-PWA estática de costo $0. Sin backend, sin API keys: el contenido vive en `packs.js` y el progreso de Cami en el localStorage de su celular.
+PWA estática de costo $0, ahora en formato videojuego. Sin backend, sin API keys: el contenido vive en `expediciones.js` y el progreso de Cami en el localStorage de su celular.
 
 ## Archivos
 | Archivo | Qué es |
 |---------|--------|
-| `index.html` | Toda la app (diseño + lógica) en un solo archivo |
-| `packs.js` | Los packs semanales de contenido — **esto es lo único que se edita cada semana** |
+| `index.html` | Toda la app: motor de escenas (visual novel), mini-juegos, desafío, XP/souvenirs/guardarropa |
+| `expediciones.js` | Las expediciones semanales — **esto es lo único que se edita cada semana** |
+| `packs.js` | Contenido V1 (legado, ya no se carga) |
 | `manifest.webmanifest` | Hace que sea instalable como app en el celular |
-| `sw.js` | Service worker: funciona offline. Subir `VERSION` al publicar pack nuevo |
+| `sw.js` | Service worker: funciona offline. Subir `VERSION` al publicar expedición nueva |
 | `icon.svg` | Ícono de la app |
+
+## Estructura de una expedición (V2)
+Cada semana = un destino. Por día (L–V): `escenas` (nodos de diálogo con `decision`/`id`/`salta` para ramificar), `minijuego` (`parejas` u `orden`), `excavacion` (2 hallazgos profundos, +15 xp c/u), `charla` (preguntas estilo RPG con `extra` de seguimiento, +10 xp c/u) y `souvenir`. Sábado: `desafio` (8 preguntas, 3 vidas → sello + accesorio para Lucio). Domingo: `biblioteca` (documental, anime, música, libro). El `PROLOGO` se juega una sola vez.
+
+**Economía:** misión 80 xp + bono de prueba (40 perfecta / 25 con ≤2 errores / 15). Nivel cada 300 xp. Accesorios de Lucio: `panoleta` (prólogo), `kasa` (Japón) — agregar el dibujo del accesorio nuevo en `lucioSVG()` y su nombre en `ACCESORIOS` al crear una expedición con accesorio nuevo.
 
 ## Probar en local
 Desde `Personal/Ocio/`:
@@ -26,12 +32,11 @@ Abrir `http://localhost:8123`. Para ver toda la semana desbloqueada (quiz y back
 
 ## Ritual semanal (con Claude Code)
 Cada domingo/lunes, en una sesión de Claude Code sobre esta carpeta:
-> "Genera el pack de la semana que empieza el lunes YYYY-MM-DD con tema principal X y alterno Y, siguiendo el formato de packs.js"
+> "Genera la expedición de la semana que empieza el lunes YYYY-MM-DD con destino X, siguiendo el formato de expediciones.js"
 
-Claude agrega el objeto nuevo al inicio del array en `packs.js`, se sube `VERSION` en `sw.js`, y se hace push al repo. Cami recibe el tema nuevo automáticamente al abrir la app.
+Claude agrega la expedición al inicio del array en `expediciones.js`, sube `VERSION` en `sw.js` y hace push al repo. Cami recibe el destino nuevo automáticamente al abrir la app.
 
 ## Cómo funciona el desbloqueo
-- Cada pack tiene `inicio` (el lunes de su semana). La cápsula del día `i` se desbloquea cuando `hoy >= inicio + i`.
-- Lun–Vie: cápsulas · Sáb: quiz (4/5 para ganar insignia) · Dom: backstage.
-- Niveles por tema: Curiosa (≥1 cápsula) → Aprendiz (5 cápsulas) → Conocedora (quiz aprobado).
-- La racha 🔥 cuenta días consecutivos abriendo la app.
+- Cada expedición tiene `inicio` (el lunes de su semana). La parada del día `i` se abre cuando `hoy >= inicio + i` (`?demo=1` abre todo).
+- Lun–Vie: misiones · Sáb: desafío final · Dom: campamento/biblioteca.
+- La racha 🔥 cuenta días consecutivos abriendo la app. El progreso V1 se migra a XP automáticamente la primera vez.

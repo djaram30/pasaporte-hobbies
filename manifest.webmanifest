@@ -1,7 +1,7 @@
 {
-  "name": "Pasaporte de Hobbies",
-  "short_name": "Pasaporte",
-  "description": "Un hobby nuevo cada semana, una cápsula cada día.",
+  "name": "Expediciones con Lucio",
+  "short_name": "Lucio",
+  "description": "Un destino cada semana, una misión cada día.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",

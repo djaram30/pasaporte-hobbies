@@ -1,7 +1,7 @@
 // Service worker del Pasaporte de Hobbies — cache para uso offline.
 // Al publicar un pack nuevo, subir la VERSION para refrescar el cache.
-const VERSION = "pasaporte-v1";
-const ARCHIVOS = ["./", "./index.html", "./packs.js", "./manifest.webmanifest", "./icon.svg"];
+const VERSION = "pasaporte-v2";
+const ARCHIVOS = ["./", "./index.html", "./expediciones.js", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(ARCHIVOS)));

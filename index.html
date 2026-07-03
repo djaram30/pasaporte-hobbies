@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Pasaporte de Hobbies</title>
-<meta name="description" content="Un hobby nuevo cada semana, una cápsula cada día.">
+<title>Expediciones con Lucio</title>
+<meta name="description" content="Un destino cada semana, una misión cada día.">
 <meta name="theme-color" content="#b85c38">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -13,219 +13,207 @@
   :root {
     --papel: #faf5ec;
     --papel-card: #ffffff;
-    --tinta: #2e2a24;
+    --tinta: #2e2a26;
     --tinta-suave: #7a7266;
     --acento: #b85c38;
     --acento-suave: #f3e2d8;
     --exito: #5a6e5a;
+    --exito-suave: #e7efe7;
+    --dorado: #c9a227;
     --borde: #e8e0d2;
     --sombra: 0 2px 12px rgba(46, 42, 36, 0.08);
-    --radio: 16px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: var(--papel);
-    color: var(--tinta);
+    background: var(--papel); color: var(--tinta);
     font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.6;
-    padding-bottom: 90px;
-    max-width: 560px;
-    margin: 0 auto;
+    line-height: 1.55; padding-bottom: 90px; max-width: 560px; margin: 0 auto;
   }
   h1, h2, h3, .brand { font-family: Georgia, "Times New Roman", serif; }
 
-  header {
-    padding: 22px 20px 14px;
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  }
-  .brand { font-size: 1.25rem; letter-spacing: .2px; }
-  .brand small { display: block; font-family: -apple-system, "Segoe UI", sans-serif; font-size: .72rem; color: var(--tinta-suave); letter-spacing: .8px; text-transform: uppercase; }
-  .streak {
-    background: var(--papel-card); border: 1px solid var(--borde); border-radius: 999px;
-    padding: 6px 14px; font-size: .85rem; font-weight: 600; box-shadow: var(--sombra); white-space: nowrap;
-  }
+  header { padding: 16px 20px 10px; display: flex; align-items: center; gap: 12px; }
+  header .lucio-mini { width: 46px; height: 46px; flex: 0 0 46px; }
+  header .hud { flex: 1; min-width: 0; }
+  header .hud .fila1 { display: flex; justify-content: space-between; align-items: baseline; }
+  header .hud .nivel { font-weight: 700; font-size: .85rem; }
+  header .hud .racha { font-size: .78rem; color: var(--tinta-suave); }
+  .xp-barra { height: 8px; background: #eee5d6; border-radius: 99px; overflow: hidden; margin-top: 4px; }
+  .xp-barra > div { height: 100%; background: var(--acento); border-radius: 99px; transition: width .5s ease; }
+  header .hud .xp-txt { font-size: .68rem; color: var(--tinta-suave); margin-top: 2px; }
 
-  .demo-banner {
-    margin: 0 20px 10px; padding: 8px 14px; border-radius: 10px;
-    background: #fff3cd; border: 1px dashed #d4b106; font-size: .78rem; color: #6b5900;
-  }
+  .demo-banner { margin: 0 20px 10px; padding: 8px 14px; border-radius: 10px; background: #fff3cd; border: 1px dashed #d4b106; font-size: .78rem; color: #6b5900; }
 
   main { padding: 0 20px; }
+  .card { background: var(--papel-card); border: 1px solid var(--borde); border-radius: 16px; box-shadow: var(--sombra); padding: 20px; margin-bottom: 14px; }
 
-  .card {
-    background: var(--papel-card); border: 1px solid var(--borde);
-    border-radius: var(--radio); box-shadow: var(--sombra);
-    padding: 20px; margin-bottom: 16px;
-  }
+  .exp-header { display: flex; align-items: center; gap: 14px; }
+  .exp-emoji { font-size: 1.9rem; width: 58px; height: 58px; flex: 0 0 58px; display: flex; align-items: center; justify-content: center; background: var(--acento-suave); border-radius: 14px; }
+  .exp-header h2 { font-size: 1.25rem; line-height: 1.2; }
+  .exp-header p { font-size: .8rem; color: var(--tinta-suave); }
 
-  .tema-header { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
-  .tema-emoji {
-    font-size: 1.9rem; width: 58px; height: 58px; flex: 0 0 58px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--acento-suave); border-radius: 14px;
-  }
-  .tema-header h2 { font-size: 1.3rem; line-height: 1.2; }
-  .tema-header p { font-size: .82rem; color: var(--tinta-suave); }
-  .cambiar-tema {
-    margin-top: 12px; width: 100%;
-    background: none; border: 1.5px dashed var(--borde); border-radius: 10px;
-    padding: 9px; font-size: .82rem; color: var(--tinta-suave); cursor: pointer;
-  }
-  .cambiar-tema:active { background: var(--acento-suave); }
+  .chip { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--acento); background: var(--acento-suave); border-radius: 999px; padding: 3px 12px; margin-bottom: 10px; }
 
-  .dia-chip {
-    display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .8px;
-    text-transform: uppercase; color: var(--acento);
-    background: var(--acento-suave); border-radius: 999px; padding: 3px 12px; margin-bottom: 10px;
-  }
-  .capsula h2 { font-size: 1.35rem; line-height: 1.3; margin-bottom: 14px; }
-  .seccion { margin-bottom: 16px; }
-  .seccion .etiqueta {
-    font-size: .72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--tinta-suave); margin-bottom: 4px;
-  }
-  .seccion p { font-size: .95rem; }
-  .dato-box, .reto-box { border-radius: 12px; padding: 14px 16px; }
-  .dato-box { background: #f0ede4; }
-  .reto-box { background: var(--acento-suave); }
-
-  .btn {
-    display: block; width: 100%; text-align: center; border: none; cursor: pointer;
-    border-radius: 12px; padding: 14px; font-size: .95rem; font-weight: 700;
-    font-family: inherit; text-decoration: none;
-  }
+  .btn { display: block; width: 100%; text-align: center; border: none; cursor: pointer; border-radius: 12px; padding: 14px; font-size: .95rem; font-weight: 700; font-family: inherit; text-decoration: none; color: var(--tinta); }
   .btn-primario { background: var(--acento); color: #fff; }
   .btn-primario:active { filter: brightness(.92); }
-  .btn-hecho { background: var(--exito); color: #fff; }
-  .btn-secundario { background: none; border: 1.5px solid var(--borde); color: var(--tinta); margin-top: 10px; }
+  .btn-exito { background: var(--exito); color: #fff; }
+  .btn-secundario { background: none; border: 1.5px solid var(--borde); }
   .btn + .btn { margin-top: 10px; }
 
-  /* Semana */
-  .dia-fila {
-    display: flex; align-items: center; gap: 14px;
-    background: var(--papel-card); border: 1px solid var(--borde); border-radius: 14px;
-    padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
-  }
-  .dia-fila.bloqueado { opacity: .5; cursor: default; }
-  .dia-fila .num {
-    width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%;
-    background: var(--acento-suave); color: var(--acento);
-    display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .8rem;
-  }
-  .dia-fila.leida .num { background: var(--exito); color: #fff; }
-  .dia-fila .info { flex: 1; min-width: 0; }
-  .dia-fila .info .nombre { font-weight: 600; font-size: .9rem; }
-  .dia-fila .info .sub { font-size: .78rem; color: var(--tinta-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dia-fila .estado { font-size: 1.1rem; }
+  /* Escenas */
+  .escena-zona { min-height: 300px; display: flex; flex-direction: column; }
+  .burbuja { border-radius: 16px; padding: 12px 16px; margin-bottom: 12px; max-width: 88%; animation: aparecer .35s ease; font-size: .95rem; }
+  @keyframes aparecer { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .burbuja .quien { font-size: .68rem; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; margin-bottom: 3px; opacity: .75; }
+  .b-lucio { background: var(--acento-suave); border-bottom-left-radius: 4px; align-self: flex-start; }
+  .b-npc { background: #eee9dc; border-bottom-left-radius: 4px; align-self: flex-start; }
+  .b-cami { background: var(--exito-suave); border-bottom-right-radius: 4px; align-self: flex-end; font-style: italic; }
+  .escena-lucio { display: flex; justify-content: center; margin-bottom: 10px; }
+  .escena-lucio svg { animation: flotar 3s ease-in-out infinite; }
+  @keyframes flotar { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  .opciones-decision .btn { text-align: left; }
 
-  /* Quiz */
-  .pregunta { margin-bottom: 22px; }
-  .pregunta h3 { font-size: 1rem; margin-bottom: 10px; }
-  .opcion {
-    display: block; width: 100%; text-align: left; cursor: pointer;
-    background: var(--papel); border: 1.5px solid var(--borde); border-radius: 10px;
-    padding: 11px 14px; margin-bottom: 8px; font-size: .9rem; font-family: inherit; color: var(--tinta);
-  }
-  .opcion.elegida { border-color: var(--acento); background: var(--acento-suave); font-weight: 600; }
-  .opcion.correcta { border-color: var(--exito); background: #e7efe7; font-weight: 600; }
+  /* Minijuegos */
+  .mj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0; }
+  .mj-carta { border: 1.5px solid var(--borde); background: var(--papel); border-radius: 10px; padding: 10px 8px; font-size: .8rem; text-align: center; cursor: pointer; font-family: inherit; color: var(--tinta); min-height: 58px; display: flex; align-items: center; justify-content: center; }
+  .mj-carta.sel { border-color: var(--acento); background: var(--acento-suave); font-weight: 600; }
+  .mj-carta.ok { border-color: var(--exito); background: var(--exito-suave); opacity: .65; pointer-events: none; }
+  .mj-carta.mal { animation: sacudir .35s; border-color: #c0392b; }
+  @keyframes sacudir { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+  .mj-lista { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+  .mj-item { border: 1.5px solid var(--borde); background: var(--papel); border-radius: 10px; padding: 12px 14px; font-size: .85rem; text-align: left; cursor: pointer; font-family: inherit; color: var(--tinta); display: flex; gap: 10px; align-items: center; }
+  .mj-item.ok { border-color: var(--exito); background: var(--exito-suave); pointer-events: none; }
+  .mj-item.mal { animation: sacudir .35s; border-color: #c0392b; }
+  .mj-item .num { width: 24px; height: 24px; flex: 0 0 24px; border-radius: 50%; background: var(--exito); color: #fff; font-size: .75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+  /* Recompensa */
+  .recompensa { text-align: center; }
+  .recompensa .grande { font-size: 3rem; animation: brincar .6s ease; }
+  @keyframes brincar { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+  .recompensa .xp-ganado { display: inline-block; margin-top: 8px; background: var(--acento-suave); color: var(--acento); font-weight: 700; border-radius: 999px; padding: 4px 16px; font-size: .9rem; }
+
+  /* Charla */
+  .charla-zona { display: flex; flex-direction: column; }
+  .charla-preguntas .btn { text-align: left; font-weight: 600; font-size: .88rem; padding: 12px 14px; }
+
+  /* Desafío */
+  .vidas { text-align: center; font-size: 1.3rem; letter-spacing: 4px; margin-bottom: 10px; }
+  .desafio-progreso { display: flex; gap: 4px; margin-bottom: 14px; }
+  .desafio-progreso span { flex: 1; height: 5px; border-radius: 99px; background: var(--borde); }
+  .desafio-progreso span.ok { background: var(--exito); }
+  .desafio-progreso span.mal { background: #c0392b; }
+  .opcion { display: block; width: 100%; text-align: left; cursor: pointer; background: var(--papel); border: 1.5px solid var(--borde); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; font-size: .9rem; font-family: inherit; color: var(--tinta); }
+  .opcion.correcta { border-color: var(--exito); background: var(--exito-suave); font-weight: 600; }
   .opcion.incorrecta { border-color: #c0392b; background: #f9e5e2; }
 
-  .resultado-quiz { text-align: center; padding: 10px 0; }
-  .resultado-quiz .puntaje { font-size: 2.6rem; font-family: Georgia, serif; }
+  /* Mapa semana */
+  .parada { display: flex; align-items: center; gap: 14px; background: var(--papel-card); border: 1px solid var(--borde); border-radius: 14px; padding: 13px 16px; margin-bottom: 0; cursor: pointer; }
+  .parada.bloqueada { opacity: .5; cursor: default; }
+  .conector { width: 2px; height: 14px; background: var(--borde); margin-left: 36px; }
+  .parada .icono { width: 40px; height: 40px; flex: 0 0 40px; border-radius: 50%; background: var(--acento-suave); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; }
+  .parada.hecha .icono { background: var(--exito); }
+  .parada .info { flex: 1; min-width: 0; }
+  .parada .info .nombre { font-weight: 600; font-size: .9rem; }
+  .parada .info .sub { font-size: .76rem; color: var(--tinta-suave); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
   /* Pasaporte */
-  .pasaporte-head { text-align: center; padding: 8px 0 18px; }
-  .pasaporte-head h2 { font-size: 1.5rem; }
-  .pasaporte-head p { color: var(--tinta-suave); font-size: .85rem; }
-  .stats { display: flex; gap: 10px; margin-bottom: 16px; }
-  .stat { flex: 1; text-align: center; background: var(--papel-card); border: 1px solid var(--borde); border-radius: 14px; padding: 14px 6px; }
-  .stat .n { font-size: 1.5rem; font-family: Georgia, serif; }
-  .stat .l { font-size: .7rem; color: var(--tinta-suave); text-transform: uppercase; letter-spacing: .6px; }
-  .sello { display: flex; align-items: center; gap: 14px; }
-  .sello + .sello { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--borde); }
-  .sello .emoji { font-size: 1.7rem; width: 52px; height: 52px; flex: 0 0 52px; display: flex; align-items: center; justify-content: center; background: var(--acento-suave); border-radius: 50%; }
-  .sello .detalle { flex: 1; }
-  .sello .detalle .nombre { font-weight: 700; font-size: .95rem; }
-  .sello .detalle .nivel { font-size: .78rem; color: var(--tinta-suave); }
-  .barra { height: 6px; background: var(--borde); border-radius: 99px; margin-top: 6px; overflow: hidden; }
-  .barra div { height: 100%; background: var(--acento); border-radius: 99px; }
-  .insignia-tag { font-size: 1.4rem; }
+  .stats { display: flex; gap: 10px; margin-bottom: 14px; }
+  .stat { flex: 1; text-align: center; background: var(--papel-card); border: 1px solid var(--borde); border-radius: 14px; padding: 12px 6px; }
+  .stat .n { font-size: 1.35rem; font-family: Georgia, serif; }
+  .stat .l { font-size: .68rem; color: var(--tinta-suave); text-transform: uppercase; letter-spacing: .6px; }
+  .souvenir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; }
+  .souvenir { text-align: center; background: var(--papel); border: 1px solid var(--borde); border-radius: 12px; padding: 10px 6px; }
+  .souvenir .e { font-size: 1.6rem; }
+  .souvenir .t { font-size: .66rem; color: var(--tinta-suave); line-height: 1.3; margin-top: 4px; }
+  .ropero { display: flex; gap: 10px; }
+  .traje { flex: 1; text-align: center; border: 2px solid var(--borde); border-radius: 14px; padding: 10px 4px; cursor: pointer; background: var(--papel); }
+  .traje.activo { border-color: var(--acento); background: var(--acento-suave); }
+  .traje.bloqueado { opacity: .45; cursor: default; }
+  .traje .t { font-size: .68rem; margin-top: 4px; color: var(--tinta-suave); }
+  .etiqueta { font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--tinta-suave); margin-bottom: 10px; }
 
-  .celebracion { text-align: center; background: var(--acento-suave); border: 1.5px solid var(--acento); }
-  .celebracion .grande { font-size: 2.6rem; }
+  .excav-card { border: 1px solid var(--borde); border-radius: 12px; margin-bottom: 10px; overflow: hidden; }
+  .excav-card > button { width: 100%; text-align: left; background: var(--papel); border: none; padding: 13px 16px; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; color: var(--tinta); display: flex; justify-content: space-between; gap: 8px; }
+  .excav-card .cuerpo { padding: 4px 16px 14px; font-size: .9rem; background: var(--papel-card); }
 
-  .vacio { text-align: center; padding: 40px 20px; color: var(--tinta-suave); }
+  .vacio { text-align: center; padding: 36px 20px; color: var(--tinta-suave); }
   .vacio .grande { font-size: 2.6rem; margin-bottom: 10px; }
 
-  /* Nav */
-  nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    max-width: 560px; margin: 0 auto;
-    background: rgba(255,255,255,.96); backdrop-filter: blur(8px);
-    border-top: 1px solid var(--borde);
-    display: flex; padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
-  }
-  nav button {
-    flex: 1; background: none; border: none; cursor: pointer; font-family: inherit;
-    padding: 8px 4px; border-radius: 12px; color: var(--tinta-suave); font-size: .7rem; font-weight: 600;
-  }
+  nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 560px; margin: 0 auto; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border-top: 1px solid var(--borde); display: flex; padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
+  nav button { flex: 1; background: none; border: none; cursor: pointer; font-family: inherit; padding: 8px 4px; border-radius: 12px; color: var(--tinta-suave); font-size: .7rem; font-weight: 600; }
   nav button .ic { display: block; font-size: 1.3rem; margin-bottom: 2px; }
   nav button.activo { color: var(--acento); background: var(--acento-suave); }
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">Pasaporte de Hobbies<small>tu sensei semanal</small></div>
-  <div class="streak" id="streak"></div>
+  <div class="lucio-mini" id="lucio-header"></div>
+  <div class="hud">
+    <div class="fila1"><span class="nivel" id="hud-nivel"></span><span class="racha" id="hud-racha"></span></div>
+    <div class="xp-barra"><div id="hud-xp-fill" style="width:0%"></div></div>
+    <div class="xp-txt" id="hud-xp-txt"></div>
+  </div>
 </header>
 <div id="demo-banner"></div>
 <main id="main"></main>
-<nav>
-  <button id="nav-hoy" onclick="irA('hoy')"><span class="ic">☀️</span>Hoy</button>
-  <button id="nav-semana" onclick="irA('semana')"><span class="ic">🗓️</span>Semana</button>
+<nav id="nav">
+  <button id="nav-hoy" onclick="irA('hoy')"><span class="ic">🧭</span>Hoy</button>
+  <button id="nav-semana" onclick="irA('semana')"><span class="ic">🗺️</span>Expedición</button>
   <button id="nav-pasaporte" onclick="irA('pasaporte')"><span class="ic">📔</span>Pasaporte</button>
 </nav>
 
-<script src="packs.js"></script>
+<script src="expediciones.js"></script>
 <script>
-/* ============ Estado ============ */
-const CLAVE = "sensei_estado_v1";
+/* ================= Estado ================= */
+const CLAVE = "lucio_estado_v2";
 const DEMO = new URLSearchParams(location.search).has("demo");
 const DIAS_NOMBRE = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+const NIVELES = ["Curiosa", "Aprendiz de viajera", "Trotamundos", "Exploradora", "Cartógrafa", "Gran Expedicionaria", "Leyenda del Pasaporte"];
+const ACCESORIOS = { ninguno: "Al natural", panoleta: "Pañoleta de exploradora", kasa: "Kasa de paja japonesa" };
+const XP_NIVEL = 300;
 
-let estado = cargarEstado();
+let estado = cargar();
 let vista = "hoy";
-let diaVisto = null; // override al tocar un día en Semana
+let diaVisto = null;
+let juego = null;
 
-function cargarEstado() {
-  try { return JSON.parse(localStorage.getItem(CLAVE)) || {}; } catch (e) { return {}; }
-}
-function defecto(e) {
-  e.leidas = e.leidas || {};      // "packId:track:dia" -> true
-  e.quiz = e.quiz || {};          // "packId:track" -> {mejor, pasado}
-  e.insignias = e.insignias || [];// [{emoji, nombre, tema, fecha}]
-  e.trackElegido = e.trackElegido || {}; // packId -> "A"|"B"
+function cargar() {
+  let e;
+  try { e = JSON.parse(localStorage.getItem(CLAVE)) || {}; } catch (err) { e = {}; }
+  e.xp = e.xp || 0;
   e.racha = e.racha || { n: 0, ultima: null };
+  e.misiones = e.misiones || {};
+  e.souvenirs = e.souvenirs || [];
+  e.sellos = e.sellos || [];
+  e.accesorios = e.accesorios || ["ninguno"];
+  e.accesorioActivo = e.accesorioActivo || "ninguno";
+  e.prologo = e.prologo || false;
+  e.insigniasV1 = e.insigniasV1 || [];
+  if (!e.migradoV1) {
+    try {
+      const v1 = JSON.parse(localStorage.getItem("sensei_estado_v1"));
+      if (v1) {
+        e.xp += Object.values(v1.leidas || {}).filter(Boolean).length * 20;
+        e.xp += (v1.insignias || []).length * 50;
+        e.insigniasV1 = v1.insignias || [];
+        if (v1.racha && v1.racha.n > e.racha.n) e.racha = v1.racha;
+      }
+    } catch (err) {}
+    e.migradoV1 = true;
+  }
   return e;
 }
-estado = defecto(estado);
 function guardar() { localStorage.setItem(CLAVE, JSON.stringify(estado)); }
+function darXP(n) { estado.xp += n; guardar(); pintarHUD(); }
+function nivel() { return Math.min(Math.floor(estado.xp / XP_NIVEL) + 1, NIVELES.length); }
+function nombreNivel() { return NIVELES[nivel() - 1]; }
 
-/* ============ Fechas ============ */
-function hoy() {
-  const d = new Date();
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
-}
-function parseFecha(s) {
-  const [y, m, d] = s.split("-").map(Number);
-  return new Date(y, m - 1, d);
-}
-function fechaISO(d) {
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-}
+/* ================= Fechas ================= */
+function hoy() { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function parseFecha(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
+function fechaISO(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
 function diasEntre(a, b) { return Math.round((b - a) / 86400000); }
 
-/* ============ Racha ============ */
 function actualizarRacha() {
   const h = fechaISO(hoy());
   if (estado.racha.ultima === h) return;
@@ -235,252 +223,497 @@ function actualizarRacha() {
   guardar();
 }
 
-/* ============ Pack y track ============ */
-function packActual() {
-  const packs = (window.SENSEI_PACKS || []).slice().sort((a, b) => b.inicio.localeCompare(a.inicio));
+/* ================= Expedición ================= */
+function expActual() {
+  const exps = (window.EXPEDICIONES || []).slice().sort((a, b) => b.inicio.localeCompare(a.inicio));
   const t = hoy();
-  for (const p of packs) {
-    const ini = parseFecha(p.inicio);
-    if (t >= ini && diasEntre(ini, t) <= 6) return p;
-  }
-  // si no hay semana activa: el más reciente ya empezado, o el primero futuro
-  for (const p of packs) if (t >= parseFecha(p.inicio)) return p;
-  return packs[packs.length - 1] || null;
+  for (const x of exps) { const ini = parseFecha(x.inicio); if (t >= ini && diasEntre(ini, t) <= 6) return x; }
+  for (const x of exps) if (t >= parseFecha(x.inicio)) return x;
+  return exps[exps.length - 1] || null;
 }
-function trackDe(pack) {
-  const id = estado.trackElegido[pack.id] || "A";
-  return { id, t: pack.tracks[id] };
-}
-function otroTrack(pack) {
-  const id = (estado.trackElegido[pack.id] || "A") === "A" ? "B" : "A";
-  return { id, t: pack.tracks[id] };
-}
-function indiceHoy(pack) { return diasEntre(parseFecha(pack.inicio), hoy()); }
-function desbloqueado(pack, i) {
-  if (DEMO) return true;
-  const idx = indiceHoy(pack);
-  return idx >= i;
-}
-function claveLeida(pack, trackId, i) { return pack.id + ":" + trackId + ":" + i; }
+function idxHoy(exp) { return diasEntre(parseFecha(exp.inicio), hoy()); }
+function abierta(exp, i) { return DEMO || idxHoy(exp) >= i; }
+function kMision(exp, i) { return exp.id + ":" + i; }
+function mision(exp, i) { const k = kMision(exp, i); estado.misiones[k] = estado.misiones[k] || {}; return estado.misiones[k]; }
 
-/* ============ Link al sensei (claude.ai) ============ */
-function linkSensei(tema, titulo) {
-  const prompt = 'Actúa como mi "Sensei de Hobbies": cercano, curioso y nada académico. Esta semana estoy aprendiendo sobre ' + tema +
-    ' y hoy leí una cápsula titulada "' + titulo + '". Cuéntame más sobre ese tema, dame ejemplos memorables y termina con una pregunta que me haga pensar. ' +
-    'Contexto sobre mí: soy ingeniera mecánica, me encantan el anime y los documentales — úsalo para tus analogías.';
-  return "https://claude.ai/new?q=" + encodeURIComponent(prompt);
+/* ================= Lucio SVG ================= */
+function lucioSVG(px, accesorio) {
+  const a = accesorio || estado.accesorioActivo;
+  let extra = "";
+  if (a === "panoleta") extra = '<path d="M38 74 Q60 88 82 74 L60 96 Z" fill="#c0392b"/><path d="M38 74 Q60 86 82 74" stroke="#96281b" stroke-width="2" fill="none"/>';
+  if (a === "kasa") extra = '<path d="M18 38 L60 8 L102 38 Q60 50 18 38 Z" fill="#d9b45c" stroke="#b6913d" stroke-width="2"/><path d="M60 8 L60 20" stroke="#b6913d" stroke-width="2"/>';
+  return '<svg viewBox="0 0 120 120" width="' + px + '" height="' + px + '" role="img" aria-label="Lucio">' +
+    '<ellipse cx="60" cy="112" rx="34" ry="6" fill="rgba(46,42,36,.08)"/>' +
+    '<path d="M88 78 Q112 74 108 52" stroke="#e88f3c" stroke-width="9" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="60" cy="82" rx="30" ry="28" fill="#ffffff" stroke="#d8d2c4" stroke-width="1.5"/>' +
+    '<path d="M60 56 a30 28 0 0 1 30 26 L60 82 Z" fill="#e88f3c"/>' +
+    '<circle cx="60" cy="46" r="24" fill="#ffffff" stroke="#d8d2c4" stroke-width="1.5"/>' +
+    '<path d="M40 32 L34 14 L50 24 Z" fill="#ffffff" stroke="#d8d2c4" stroke-width="1.5"/>' +
+    '<path d="M80 32 L86 14 L70 24 Z" fill="#e88f3c"/>' +
+    '<path d="M60 24 a24 24 0 0 1 22 16 L60 46 Z" fill="#e88f3c"/>' +
+    '<circle cx="51" cy="46" r="3" fill="#2e2a26"/><circle cx="69" cy="46" r="3" fill="#2e2a26"/>' +
+    '<path d="M57 53 q3 3 6 0" stroke="#2e2a26" stroke-width="1.8" fill="none" stroke-linecap="round"/>' +
+    '<path d="M55 51 l2 2 M65 51 l-2 2" stroke="#2e2a26" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path d="M30 48 h12 M30 53 h11 M78 48 h12 M79 53 h11" stroke="#c9c2b2" stroke-width="1.4" stroke-linecap="round"/>' +
+    extra + '</svg>';
 }
 
-/* ============ Render ============ */
-function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
-function md(s) { return esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/\*(.+?)\*/g, "<i>$1</i>"); }
+/* ================= Render base ================= */
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+function irA(v) { vista = v; diaVisto = null; juego = null; render(); window.scrollTo(0, 0); }
 
-function irA(v) { vista = v; diaVisto = null; render(); window.scrollTo(0, 0); }
+function pintarHUD() {
+  document.getElementById("lucio-header").innerHTML = lucioSVG(46);
+  document.getElementById("hud-nivel").textContent = "Nv. " + nivel() + " · " + nombreNivel();
+  document.getElementById("hud-racha").textContent = "🔥 " + estado.racha.n + (estado.racha.n === 1 ? " día" : " días");
+  const enNivel = estado.xp % XP_NIVEL;
+  document.getElementById("hud-xp-fill").style.width = Math.round((enNivel / XP_NIVEL) * 100) + "%";
+  document.getElementById("hud-xp-txt").textContent = enNivel + " / " + XP_NIVEL + " xp para el siguiente nivel";
+}
 
 function render() {
-  document.getElementById("streak").textContent = "🔥 " + estado.racha.n + (estado.racha.n === 1 ? " día" : " días");
-  document.getElementById("demo-banner").innerHTML = DEMO ? '<div class="demo-banner">🔧 Modo demo: todos los días desbloqueados (quita <b>?demo</b> de la URL para el modo real).</div>' : "";
+  pintarHUD();
+  document.getElementById("demo-banner").innerHTML = DEMO ? '<div class="demo-banner">🔧 Modo demo: toda la expedición desbloqueada.</div>' : "";
   ["hoy", "semana", "pasaporte"].forEach(v => document.getElementById("nav-" + v).classList.toggle("activo", v === vista));
+  document.getElementById("nav").style.display = juego ? "none" : "flex";
   const main = document.getElementById("main");
-  const pack = packActual();
-  if (!pack) { main.innerHTML = '<div class="vacio"><div class="grande">🌱</div>Aún no hay packs cargados.</div>'; return; }
-  if (vista === "hoy") main.innerHTML = vistaHoy(pack);
-  else if (vista === "semana") main.innerHTML = vistaSemana(pack);
+  if (juego) { main.innerHTML = vistaJuego(); return; }
+  const exp = expActual();
+  if (!exp) { main.innerHTML = '<div class="vacio"><div class="grande">🌱</div>Aún no hay expediciones.</div>'; return; }
+  if (vista === "hoy") main.innerHTML = vistaHoy(exp);
+  else if (vista === "semana") main.innerHTML = vistaSemana(exp);
   else main.innerHTML = vistaPasaporte();
 }
 
-function cardTema(pack) {
-  const { t } = trackDe(pack);
-  const otro = otroTrack(pack);
-  return '<div class="card">' +
-    '<div class="tema-header"><div class="tema-emoji">' + t.emoji + '</div>' +
-    '<div><h2>' + esc(t.tema) + '</h2><p>' + esc(t.subtitulo) + '</p></div></div>' +
-    '<button class="cambiar-tema" onclick="cambiarTema()">🔄 ¿Otro tema esta semana? Cambiar a ' + otro.t.emoji + ' ' + esc(otro.t.tema) + '</button>' +
-    '</div>';
-}
-function cambiarTema() {
-  const pack = packActual();
-  estado.trackElegido[pack.id] = otroTrack(pack).id;
-  guardar(); diaVisto = null; render();
+function cardExp(exp) {
+  return '<div class="card"><div class="exp-header"><div class="exp-emoji">' + exp.emoji + '</div>' +
+    '<div><h2>Expedición: ' + esc(exp.destino) + '</h2><p>' + esc(exp.subtitulo) + '</p></div></div></div>';
 }
 
-function vistaHoy(pack) {
-  let i = (diaVisto !== null) ? diaVisto : Math.min(Math.max(indiceHoy(pack), 0), 6);
-  if (!DEMO && indiceHoy(pack) < 0) {
-    return cardTema(pack) + '<div class="vacio"><div class="grande">⏳</div>Tu semana empieza el lunes ' + pack.inicio + '. ¡Prepárate!</div>';
-  }
-  if (!DEMO && indiceHoy(pack) > 6 && diaVisto === null) {
-    return cardTema(pack) + '<div class="vacio"><div class="grande">🎉</div>Semana completada. El sensei está preparando el próximo tema…<br><br>Mientras tanto, repasa la semana en 🗓️.</div>';
-  }
-  if (!desbloqueado(pack, i)) {
-    return cardTema(pack) + '<div class="vacio"><div class="grande">🔒</div>Esta cápsula se desbloquea el ' + DIAS_NOMBRE[i].toLowerCase() + '. ¡Paciencia, saltamontes!</div>';
-  }
-  if (i <= 4) return cardTema(pack) + vistaCapsula(pack, i);
-  if (i === 5) return cardTema(pack) + vistaQuiz(pack);
-  return cardTema(pack) + vistaBackstage(pack);
-}
+/* ================= Vista Hoy ================= */
+function vistaHoy(exp) {
+  const idx = idxHoy(exp);
+  let i = (diaVisto !== null) ? diaVisto : Math.min(Math.max(idx, 0), 6);
+  let html = cardExp(exp);
 
-function vistaCapsula(pack, i) {
-  const { id: trackId, t } = trackDe(pack);
-  const c = t.dias[i];
-  const leida = !!estado.leidas[claveLeida(pack, trackId, i)];
-  return '<div class="card capsula">' +
-    '<span class="dia-chip">' + DIAS_NOMBRE[i] + ' · Cápsula ' + (i + 1) + ' de 5</span>' +
-    '<h2>' + esc(c.titulo) + '</h2>' +
-    '<div class="seccion"><div class="etiqueta">La idea</div><p>' + md(c.concepto) + '</p></div>' +
-    '<div class="seccion"><div class="etiqueta">La historia</div><p>' + md(c.historia) + '</p></div>' +
-    '<div class="seccion dato-box"><div class="etiqueta">💡 Dato para presumir</div><p>' + md(c.dato) + '</p></div>' +
-    '<div class="seccion reto-box"><div class="etiqueta">🎯 Mini-reto</div><p>' + md(c.reto) + '</p></div>' +
-    '<button class="btn ' + (leida ? "btn-hecho" : "btn-primario") + '" onclick="marcarLeida(' + i + ')">' +
-    (leida ? "✓ Aprendida" : "Marcar como aprendida") + '</button>' +
-    '<a class="btn btn-secundario" target="_blank" rel="noopener" href="' + linkSensei(t.tema, c.titulo) + '">💬 Pregúntale más al sensei</a>' +
-    '</div>';
-}
-function marcarLeida(i) {
-  const pack = packActual();
-  const { id: trackId } = trackDe(pack);
-  const k = claveLeida(pack, trackId, i);
-  estado.leidas[k] = !estado.leidas[k];
-  guardar(); render();
-}
+  if (!estado.prologo) {
+    html += '<div class="card recompensa"><div style="margin-bottom:6px">' + lucioSVG(110) + '</div>' +
+      '<h2 style="font-size:1.2rem;margin-bottom:6px;">Lucio quiere decirte algo…</h2>' +
+      '<p style="font-size:.88rem;color:var(--tinta-suave);margin-bottom:14px;">Tu gato lleva años guardando un secreto. Escúchalo antes de partir.</p>' +
+      '<button class="btn btn-primario" onclick="jugarPrologo()">▶ Jugar el prólogo</button></div>';
+    if (!DEMO && idx < 0) return html;
+  }
 
-/* ============ Quiz ============ */
-let quizSel = {};
-function vistaQuiz(pack) {
-  const { id: trackId, t } = trackDe(pack);
-  const kq = pack.id + ":" + trackId;
-  const res = estado.quiz[kq];
-  let html = '<div class="card"><span class="dia-chip">Sábado · Quiz de la semana</span>' +
-    '<h2 style="font-family:Georgia,serif;font-size:1.3rem;margin-bottom:6px;">¿Cuánto aprendiste de ' + esc(t.tema.toLowerCase()) + '?</h2>' +
-    '<p style="font-size:.85rem;color:var(--tinta-suave);margin-bottom:18px;">Acierta 4 de 5 y ganas la insignia <b>' + t.emoji + ' ' + esc(t.insignia) + '</b> para tu pasaporte.</p>';
-  if (res && res.pasado) {
-    html += '<div class="resultado-quiz"><div class="puntaje">' + res.mejor + '/5</div><p>¡Insignia ganada! ' + t.emoji + ' Ya eres <b>' + esc(t.insignia) + '</b>.</p></div></div>';
+  if (!DEMO && idx < 0) {
+    const faltan = -idx;
+    html += '<div class="vacio"><div class="grande">🧳</div>La expedición a ' + esc(exp.destino) + ' sale en ' + faltan + (faltan === 1 ? " día" : " días") + '.<br>Lucio ya empacó las sardinas.</div>';
     return html;
   }
-  t.quiz.preguntas.forEach((p, pi) => {
-    html += '<div class="pregunta"><h3>' + (pi + 1) + '. ' + esc(p.q) + '</h3>';
-    p.opciones.forEach((o, oi) => {
-      const sel = quizSel[pi] === oi ? " elegida" : "";
-      html += '<button class="opcion' + sel + '" onclick="elegir(' + pi + ',' + oi + ')">' + esc(o) + '</button>';
+  if (!DEMO && idx > 6 && diaVisto === null) {
+    html += '<div class="vacio"><div class="grande">🎉</div>Expedición completada. Lucio está planeando el próximo destino…<br><br>Repasa el viaje en 🗺️.</div>';
+    return html;
+  }
+  if (!abierta(exp, i)) {
+    html += '<div class="vacio"><div class="grande">🔒</div>Esta parada se abre el ' + DIAS_NOMBRE[i].toLowerCase() + '. Los gatos sabemos esperar. Tú también puedes.</div>';
+    return html;
+  }
+  if (i <= 4) return html + cardMision(exp, i);
+  if (i === 5) return html + cardDesafio(exp);
+  return html + cardCampamento(exp);
+}
+
+function cardMision(exp, i) {
+  const d = exp.dias[i];
+  const m = mision(exp, i);
+  let html = '<div class="card"><span class="chip">' + DIAS_NOMBRE[i] + ' · Misión ' + (i + 1) + ' de 5</span>' +
+    '<h2 style="font-size:1.3rem;margin-bottom:10px;">' + esc(d.titulo) + '</h2>';
+  if (!m.completada) {
+    html += '<p style="font-size:.88rem;color:var(--tinta-suave);margin-bottom:14px;">Una misión jugable de ~5 minutos con Lucio. Al completarla ganas XP y el souvenir del día: ' + d.souvenir.emoji + '</p>' +
+      '<button class="btn btn-primario" onclick="jugarMision(' + i + ')">▶ Jugar la misión</button>';
+  } else {
+    html += '<p style="font-size:.85rem;color:var(--exito);font-weight:700;margin-bottom:12px;">✓ Misión completada · souvenir ' + d.souvenir.emoji + ' conseguido</p>' +
+      '<button class="btn btn-primario" onclick="abrirExcavacion(' + i + ')">⛏️ Excavación — la capa profunda' + (m.excav && m.excav.length === d.excavacion.length ? " ✓" : "") + '</button>' +
+      '<button class="btn btn-secundario" onclick="abrirCharla(' + i + ')">💬 Charlar con Lucio sobre esto</button>' +
+      '<button class="btn btn-secundario" onclick="jugarMision(' + i + ')">↺ Rejugar la misión</button>';
+  }
+  return html + '</div>';
+}
+
+function cardDesafio(exp) {
+  const df = exp.desafio;
+  const pasado = estado.sellos.some(s => s.expId === exp.id);
+  let html = '<div class="card"><span class="chip">Sábado · Desafío final</span>' +
+    '<h2 style="font-size:1.3rem;margin-bottom:10px;">' + esc(df.titulo) + '</h2>';
+  if (pasado) {
+    html += '<div class="recompensa"><div class="grande">' + exp.emoji + '</div><p style="font-weight:700;">¡Sello de ' + esc(exp.destino) + ' conseguido!</p>' +
+      '<p style="font-size:.85rem;color:var(--tinta-suave);margin-top:4px;">Y Lucio estrenó su ' + esc(exp.accesorio.nombre) + '. Se ve espectacular, según él.</p></div>';
+  } else {
+    html += '<p style="font-size:.9rem;margin-bottom:6px;">' + esc(df.intro) + '</p>' +
+      '<p style="font-size:.82rem;color:var(--tinta-suave);margin-bottom:14px;">Premio: sello de ' + esc(exp.destino) + ' en tu pasaporte + un accesorio nuevo para Lucio: <b>' + esc(exp.accesorio.nombre) + '</b> 🎁</p>' +
+      '<button class="btn btn-primario" onclick="jugarDesafio()">⚔️ Aceptar el desafío</button>';
+  }
+  return html + '</div>';
+}
+
+function cardCampamento(exp) {
+  const b = exp.biblioteca;
+  let html = '<div class="card"><span class="chip">Domingo · Campamento</span>' +
+    '<h2 style="font-size:1.25rem;margin-bottom:8px;">La fogata de Lucio</h2>' +
+    '<p style="font-size:.88rem;color:var(--tinta-suave);margin-bottom:14px;">' + esc(b.nota) + '</p>';
+  b.items.forEach(it => {
+    html += '<div style="background:var(--papel);border-radius:12px;padding:12px 14px;margin-bottom:10px;">' +
+      '<div style="font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--tinta-suave);">' + it.icono + ' ' + esc(it.tipo) + '</div>' +
+      '<div style="font-weight:700;font-size:.92rem;margin:2px 0;">' + esc(it.titulo) + '</div>' +
+      '<div style="font-size:.84rem;">' + esc(it.nota) + '</div></div>';
+  });
+  return html + '</div>';
+}
+
+/* ================= Juego: escenas ================= */
+function jugarPrologo() { juego = { tipo: "escenas", esPrologo: true, nodos: window.PROLOGO.escenas, i: 0, historial: [] }; avanzarHasta(); render(); window.scrollTo(0, 0); }
+function jugarMision(i) { const exp = expActual(); juego = { tipo: "escenas", exp, dia: i, nodos: exp.dias[i].escenas, i: 0, historial: [] }; avanzarHasta(); render(); window.scrollTo(0, 0); }
+
+function nodoIdx(id) { return juego.nodos.findIndex(n => n.id === id); }
+function avanzarHasta() {
+  while (juego.i < juego.nodos.length) {
+    const n = juego.nodos[juego.i];
+    if (n.salta !== undefined) { juego.i = nodoIdx(n.salta); continue; }
+    if (n.decision) { juego.esperando = "decision"; return; }
+    juego.historial.push(n);
+    juego.esperando = "continuar";
+    return;
+  }
+  juego.esperando = "fin";
+}
+function continuar() { juego.i++; avanzarHasta(); if (juego.esperando === "fin") return finEscenas(); render(); window.scrollTo(0, document.body.scrollHeight); }
+function decidir(ir) { juego.i = nodoIdx(ir); avanzarHasta(); render(); window.scrollTo(0, document.body.scrollHeight); }
+
+function finEscenas() {
+  if (juego.esPrologo) {
+    if (!estado.prologo) {
+      estado.prologo = true;
+      estado.souvenirs.push({ expId: "prologo", emoji: window.PROLOGO.souvenir.emoji, nombre: window.PROLOGO.souvenir.nombre, fecha: fechaISO(hoy()) });
+      if (!estado.accesorios.includes(window.PROLOGO.accesorio)) estado.accesorios.push(window.PROLOGO.accesorio);
+      estado.accesorioActivo = window.PROLOGO.accesorio;
+      darXP(window.PROLOGO.xp);
+    }
+    juego = { tipo: "recompensa", titulo: "¡Prólogo completado!", emoji: "✈️", lineas: ["Souvenir: " + window.PROLOGO.souvenir.nombre, "Lucio desbloqueó su pañoleta de exploradora 🧣", "+" + window.PROLOGO.xp + " xp"] };
+    guardar(); render(); window.scrollTo(0, 0); return;
+  }
+  const m = mision(juego.exp, juego.dia);
+  if (m.completada) { const dia = juego.dia; juego = null; diaVisto = dia; render(); window.scrollTo(0, 0); return; }
+  const d = juego.exp.dias[juego.dia];
+  juego = { tipo: "minijuego", exp: juego.exp, dia: juego.dia, mj: d.minijuego, errores: 0, sel: null, hechas: [], colocados: 0, barajado: null };
+  render(); window.scrollTo(0, 0);
+}
+
+function vistaJuego() {
+  if (juego.tipo === "escenas") return vistaEscenas();
+  if (juego.tipo === "minijuego") return vistaMinijuego();
+  if (juego.tipo === "recompensa") return vistaRecompensa();
+  if (juego.tipo === "excavacion") return vistaExcavacion();
+  if (juego.tipo === "charla") return vistaCharla();
+  if (juego.tipo === "desafio") return vistaDesafio();
+  return "";
+}
+
+function vistaEscenas() {
+  const titulo = juego.esPrologo ? window.PROLOGO.titulo : juego.exp.dias[juego.dia].titulo;
+  let html = '<div class="card"><span class="chip">' + esc(titulo) + '</span>' +
+    '<div class="escena-lucio">' + lucioSVG(96) + '</div><div class="escena-zona">';
+  const ultimos = juego.historial.slice(-4);
+  ultimos.forEach(n => {
+    const clase = n.de === "lucio" ? "b-lucio" : n.de === "cami" ? "b-cami" : "b-npc";
+    const quien = n.de === "lucio" ? "Lucio" : n.de === "cami" ? "Tú" : n.nombre;
+    html += '<div class="burbuja ' + clase + '"><div class="quien">' + esc(quien) + '</div>' + esc(n.texto) + '</div>';
+  });
+  html += '</div>';
+  if (juego.esperando === "decision") {
+    const n = juego.nodos[juego.i];
+    html += '<div class="opciones-decision">';
+    n.decision.forEach(o => { html += '<button class="btn btn-secundario" onclick="decidir(\'' + o.ir + '\')">👉 ' + esc(o.texto) + '</button>'; });
+    html += '</div>';
+  } else {
+    html += '<button class="btn btn-primario" onclick="continuar()">Continuar ▸</button>';
+  }
+  html += '<button class="btn btn-secundario" onclick="juego=null;render()">✕ Salir</button></div>';
+  return html;
+}
+
+/* ================= Minijuegos ================= */
+function barajar(a) { const b = a.slice(); for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; }
+
+function vistaMinijuego() {
+  const mj = juego.mj;
+  let html = '<div class="card"><span class="chip">Prueba del día</span>' +
+    '<h2 style="font-size:1.1rem;margin-bottom:4px;">' + esc(mj.instruccion) + '</h2>' +
+    '<p style="font-size:.78rem;color:var(--tinta-suave);">Errores: ' + juego.errores + '</p>';
+  if (mj.tipo === "parejas") {
+    if (!juego.barajado) {
+      juego.barajado = barajar(mj.pares.flatMap((p, pi) => [{ t: p[0], par: pi }, { t: p[1], par: pi }]));
+    }
+    html += '<div class="mj-grid">';
+    juego.barajado.forEach((c, ci) => {
+      const ok = juego.hechas.includes(c.par);
+      const sel = juego.sel === ci;
+      html += '<button class="mj-carta' + (ok ? " ok" : sel ? " sel" : "") + '" id="mjc' + ci + '" onclick="tocarCarta(' + ci + ')">' + esc(c.t) + '</button>';
     });
     html += '</div>';
-  });
-  const listo = t.quiz.preguntas.every((_, pi) => quizSel[pi] !== undefined);
-  html += '<button class="btn btn-primario" ' + (listo ? "" : "disabled style='opacity:.4'") + ' onclick="calificar()">Calificar</button>';
-  if (res) html += '<p style="text-align:center;font-size:.8rem;color:var(--tinta-suave);margin-top:10px;">Mejor intento: ' + res.mejor + '/5 — ¡puedes reintentar!</p>';
-  html += '</div>';
-  return html;
-}
-function elegir(pi, oi) { quizSel[pi] = oi; render(); }
-function calificar() {
-  const pack = packActual();
-  const { id: trackId, t } = trackDe(pack);
-  const kq = pack.id + ":" + trackId;
-  let puntos = 0;
-  t.quiz.preguntas.forEach((p, pi) => { if (quizSel[pi] === p.correcta) puntos++; });
-  const prev = estado.quiz[kq] || { mejor: 0, pasado: false };
-  const pasado = puntos >= 4;
-  estado.quiz[kq] = { mejor: Math.max(prev.mejor, puntos), pasado: prev.pasado || pasado };
-  if (pasado && !prev.pasado) {
-    estado.insignias.push({ emoji: t.emoji, nombre: t.insignia, tema: t.tema, fecha: fechaISO(hoy()) });
-  }
-  guardar();
-  quizSel = {};
-  const main = document.getElementById("main");
-  if (pasado) {
-    main.innerHTML = cardTema(pack) +
-      '<div class="card celebracion"><div class="grande">' + t.emoji + '</div>' +
-      '<h2 style="margin:8px 0 4px;">¡' + puntos + '/5 — Insignia ganada!</h2>' +
-      '<p>Nuevo sello en tu pasaporte: <b>' + esc(t.insignia) + '</b></p>' +
-      '<button class="btn btn-primario" style="margin-top:14px" onclick="irA(\'pasaporte\')">Ver mi pasaporte 📔</button></div>';
-    window.scrollTo(0, 0);
   } else {
-    main.innerHTML = cardTema(pack) +
-      '<div class="card" style="text-align:center;"><div class="resultado-quiz"><div class="puntaje">' + puntos + '/5</div>' +
-      '<p>Casi… necesitas 4 para la insignia. Repasa las cápsulas y reintenta — el sensei cree en ti 🙏</p></div>' +
-      '<button class="btn btn-primario" onclick="diaVisto=5;render();window.scrollTo(0,0)">Reintentar</button>' +
-      '<button class="btn btn-secundario" onclick="irA(\'semana\')">Repasar la semana</button></div>';
-    window.scrollTo(0, 0);
+    if (!juego.barajado) {
+      juego.barajado = barajar(mj.items.map((t, oi) => ({ t, orden: oi })));
+      juego.colocados = 0;
+    }
+    html += '<div class="mj-lista">';
+    juego.barajado.forEach((it, ii) => {
+      const ok = it.orden < juego.colocados;
+      html += '<button class="mj-item' + (ok ? " ok" : "") + '" id="mji' + ii + '" onclick="tocarItem(' + ii + ')">' +
+        (ok ? '<span class="num">' + (it.orden + 1) + '</span>' : '<span class="num" style="background:var(--borde);color:var(--tinta-suave)">?</span>') + esc(it.t) + '</button>';
+    });
+    html += '</div><p style="font-size:.78rem;color:var(--tinta-suave);text-align:center;">Toca los pasos en orden, del primero al último.</p>';
+  }
+  return html + '</div>';
+}
+function tocarCarta(ci) {
+  const c = juego.barajado[ci];
+  if (juego.hechas.includes(c.par)) return;
+  if (juego.sel === null) { juego.sel = ci; render(); return; }
+  if (juego.sel === ci) { juego.sel = null; render(); return; }
+  const otra = juego.barajado[juego.sel];
+  if (otra.par === c.par) {
+    juego.hechas.push(c.par); juego.sel = null;
+    if (juego.hechas.length === juego.mj.pares.length) return completarMision();
+    render();
+  } else {
+    juego.errores++;
+    const el = document.getElementById("mjc" + ci); if (el) { el.classList.add("mal"); }
+    setTimeout(() => { juego.sel = null; render(); }, 380);
+  }
+}
+function tocarItem(ii) {
+  const it = juego.barajado[ii];
+  if (it.orden < juego.colocados) return;
+  if (it.orden === juego.colocados) {
+    juego.colocados++;
+    if (juego.colocados === juego.mj.items.length) return completarMision();
+    render();
+  } else {
+    juego.errores++;
+    const el = document.getElementById("mji" + ii); if (el) el.classList.add("mal");
+    setTimeout(render, 380);
   }
 }
 
-/* ============ Backstage ============ */
-function vistaBackstage(pack) {
-  const { t } = trackDe(pack);
-  const b = t.backstage;
-  const item = (ic, tipo, x) => '<div class="seccion dato-box"><div class="etiqueta">' + ic + ' ' + tipo + '</div>' +
-    '<p><b>' + esc(x.titulo) + '</b><br><span style="font-size:.88rem;">' + esc(x.nota) + '</span></p></div>';
-  return '<div class="card"><span class="dia-chip">Domingo · Backstage</span>' +
-    '<h2 style="font-family:Georgia,serif;font-size:1.3rem;margin-bottom:14px;">Para gozarte el tema sin leer nada</h2>' +
-    item("🎬", "Documental", b.documental) +
-    item("🎌", "Anime", b.anime) +
-    item("🎵", "Música", b.musica) +
-    '<p style="font-size:.85rem;color:var(--tinta-suave);text-align:center;margin-top:6px;">Mañana empieza un tema nuevo ✨</p></div>';
+function completarMision() {
+  const exp = juego.exp, dia = juego.dia;
+  const d = exp.dias[dia];
+  const m = mision(exp, dia);
+  const bonus = juego.errores === 0 ? 40 : juego.errores <= 2 ? 25 : 15;
+  m.completada = true;
+  estado.souvenirs.push({ expId: exp.id, emoji: d.souvenir.emoji, nombre: d.souvenir.nombre, fecha: fechaISO(hoy()) });
+  darXP(80 + bonus);
+  guardar();
+  juego = { tipo: "recompensa", exp, dia, titulo: "¡Misión completada!", emoji: d.souvenir.emoji,
+    lineas: ["Souvenir: " + d.souvenir.nombre, juego.errores === 0 ? "Prueba perfecta 🎯 +40 xp extra" : "+" + bonus + " xp extra por la prueba", "+80 xp de misión", "Se desbloqueó la excavación ⛏️ y la charla con Lucio 💬"] };
+  render(); window.scrollTo(0, 0);
 }
 
-/* ============ Semana ============ */
-function vistaSemana(pack) {
-  const { id: trackId, t } = trackDe(pack);
-  let html = cardTema(pack);
-  const nombres = t.dias.map(d => d.titulo).concat(["Quiz de la semana", "Backstage: documental, anime y música"]);
-  for (let i = 0; i < 7; i++) {
-    const abierto = desbloqueado(pack, i);
-    const leida = i <= 4 && estado.leidas[claveLeida(pack, trackId, i)];
-    const kq = pack.id + ":" + trackId;
-    const quizOk = i === 5 && estado.quiz[kq] && estado.quiz[kq].pasado;
-    const icono = !abierto ? "🔒" : (leida || quizOk) ? "✅" : (i === 5 ? "📝" : i === 6 ? "🍿" : "📖");
-    html += '<div class="dia-fila' + (abierto ? "" : " bloqueado") + (leida || quizOk ? " leida" : "") + '"' +
-      (abierto ? ' onclick="verDia(' + i + ')"' : "") + '>' +
-      '<div class="num">' + DIAS_NOMBRE[i].slice(0, 3) + '</div>' +
-      '<div class="info"><div class="nombre">' + (i === 5 ? "Quiz 📝" : i === 6 ? "Backstage 🍿" : "Cápsula " + (i + 1)) + '</div>' +
-      '<div class="sub">' + esc(nombres[i]) + '</div></div>' +
-      '<div class="estado">' + icono + '</div></div>';
+function vistaRecompensa() {
+  let html = '<div class="card recompensa"><div class="grande">' + juego.emoji + '</div>' +
+    '<h2 style="margin:8px 0 10px;">' + esc(juego.titulo) + '</h2>';
+  juego.lineas.forEach(l => { html += '<p style="font-size:.9rem;margin-bottom:4px;">' + esc(l) + '</p>'; });
+  if (juego.exp !== undefined && juego.dia !== undefined) {
+    html += '<button class="btn btn-primario" style="margin-top:14px;" onclick="abrirExcavacion(' + juego.dia + ')">⛏️ Abrir la excavación</button>' +
+      '<button class="btn btn-secundario" onclick="abrirCharla(' + juego.dia + ')">💬 Charlar con Lucio</button>';
   }
+  html += '<button class="btn btn-secundario" onclick="juego=null;render();window.scrollTo(0,0)">Volver al campamento</button></div>';
   return html;
 }
-function verDia(i) { vista = "hoy"; diaVisto = i; render(); window.scrollTo(0, 0); }
 
-/* ============ Pasaporte ============ */
+/* ================= Excavación ================= */
+function abrirExcavacion(dia) { const exp = expActual(); juego = { tipo: "excavacion", exp, dia, abiertas: [] }; render(); window.scrollTo(0, 0); }
+function vistaExcavacion() {
+  const d = juego.exp.dias[juego.dia];
+  const m = mision(juego.exp, juego.dia);
+  m.excav = m.excav || [];
+  let html = '<div class="card"><span class="chip">⛏️ Excavación · ' + esc(d.titulo) + '</span>' +
+    '<p style="font-size:.84rem;color:var(--tinta-suave);margin-bottom:14px;">La capa profunda del tema de hoy. Cada hallazgo que leas suma +15 xp (una vez).</p>';
+  d.excavacion.forEach((s, si) => {
+    const abierta = juego.abiertas.includes(si);
+    const leida = m.excav.includes(si);
+    html += '<div class="excav-card"><button onclick="toggleExcav(' + si + ')"><span>' + (leida ? "✓ " : "") + esc(s.titulo) + '</span><span>' + (abierta ? "▾" : "▸") + '</span></button>';
+    if (abierta) html += '<div class="cuerpo">' + esc(s.texto) + '</div>';
+    html += '</div>';
+  });
+  html += '<button class="btn btn-secundario" onclick="juego=null;render();window.scrollTo(0,0)">← Volver</button></div>';
+  return html;
+}
+function toggleExcav(si) {
+  const m = mision(juego.exp, juego.dia);
+  const ya = juego.abiertas.indexOf(si);
+  if (ya >= 0) juego.abiertas.splice(ya, 1);
+  else {
+    juego.abiertas.push(si);
+    if (!m.excav.includes(si)) { m.excav.push(si); darXP(15); guardar(); }
+  }
+  render();
+}
+
+/* ================= Charla con Lucio ================= */
+function abrirCharla(dia) { const exp = expActual(); juego = { tipo: "charla", exp, dia, hilo: [] }; render(); window.scrollTo(0, 0); }
+function vistaCharla() {
+  const d = juego.exp.dias[juego.dia];
+  const m = mision(juego.exp, juego.dia);
+  m.charla = m.charla || [];
+  let html = '<div class="card"><span class="chip">💬 Charla con Lucio · ' + esc(d.titulo) + '</span>' +
+    '<div class="escena-lucio">' + lucioSVG(80) + '</div><div class="charla-zona escena-zona" style="min-height:0;">' +
+    '<div class="burbuja b-lucio"><div class="quien">Lucio</div>¿Qué quieres saber? Pregunta con confianza — cobro en caricias.</div>';
+  juego.hilo.forEach(h => {
+    html += '<div class="burbuja b-cami"><div class="quien">Tú</div>' + esc(h.q) + '</div>' +
+      '<div class="burbuja b-lucio"><div class="quien">Lucio</div>' + esc(h.a) + '</div>';
+  });
+  html += '</div><div class="charla-preguntas">';
+  d.charla.forEach((c, qi) => {
+    if (!juego.hilo.some(h => h.q === c.q)) html += '<button class="btn btn-secundario" onclick="preguntar(' + qi + ',false)">' + esc(c.q) + '</button>';
+    else if (c.extra && !juego.hilo.some(h => h.q === c.extra.q)) html += '<button class="btn btn-secundario" onclick="preguntar(' + qi + ',true)">↳ ' + esc(c.extra.q) + '</button>';
+  });
+  html += '</div><button class="btn btn-secundario" onclick="juego=null;render();window.scrollTo(0,0)">← Volver</button></div>';
+  return html;
+}
+function preguntar(qi, esExtra) {
+  const d = juego.exp.dias[juego.dia];
+  const m = mision(juego.exp, juego.dia);
+  const c = d.charla[qi];
+  const par = esExtra ? c.extra : c;
+  juego.hilo.push({ q: par.q, a: par.a });
+  const marca = qi + (esExtra ? "x" : "");
+  if (!m.charla.includes(marca)) { m.charla.push(marca); darXP(10); guardar(); }
+  render();
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+/* ================= Desafío ================= */
+function jugarDesafio() { const exp = expActual(); juego = { tipo: "desafio", exp, i: 0, vidas: exp.desafio.vidas, resultados: [], resuelto: null }; render(); window.scrollTo(0, 0); }
+function vistaDesafio() {
+  const df = juego.exp.desafio;
+  if (juego.i >= df.preguntas.length || juego.vidas === 0) return vistaFinDesafio();
+  const p = df.preguntas[juego.i];
+  let html = '<div class="card"><span class="chip">⚔️ ' + esc(df.titulo) + '</span>' +
+    '<div class="vidas">' + "❤️".repeat(juego.vidas) + "🖤".repeat(df.vidas - juego.vidas) + '</div>' +
+    '<div class="desafio-progreso">' + df.preguntas.map((_, i) => '<span class="' + (juego.resultados[i] === true ? "ok" : juego.resultados[i] === false ? "mal" : "") + '"></span>').join("") + '</div>' +
+    '<h3 style="font-size:1rem;margin-bottom:12px;">' + (juego.i + 1) + '. ' + esc(p.q) + '</h3>';
+  p.opciones.forEach((o, oi) => {
+    let clase = "";
+    if (juego.resuelto !== null) { if (oi === p.correcta) clase = " correcta"; else if (oi === juego.resuelto && oi !== p.correcta) clase = " incorrecta"; }
+    html += '<button class="opcion' + clase + '" onclick="responderDesafio(' + oi + ')"' + (juego.resuelto !== null ? " disabled" : "") + '>' + esc(o) + '</button>';
+  });
+  if (juego.resuelto !== null) html += '<button class="btn btn-primario" onclick="siguientePregunta()">Siguiente ▸</button>';
+  html += '<button class="btn btn-secundario" onclick="juego=null;render()">✕ Rendirse (Lucio fingirá no juzgarte)</button></div>';
+  return html;
+}
+function responderDesafio(oi) {
+  if (juego.resuelto !== null) return;
+  const p = juego.exp.desafio.preguntas[juego.i];
+  juego.resuelto = oi;
+  const bien = oi === p.correcta;
+  juego.resultados[juego.i] = bien;
+  if (!bien) juego.vidas--;
+  render();
+}
+function siguientePregunta() { juego.i++; juego.resuelto = null; render(); window.scrollTo(0, 0); }
+function vistaFinDesafio() {
+  const exp = juego.exp;
+  const gano = juego.vidas > 0;
+  if (gano && !estado.sellos.some(s => s.expId === exp.id)) {
+    estado.sellos.push({ expId: exp.id, destino: exp.destino, emoji: exp.emoji, fecha: fechaISO(hoy()) });
+    if (!estado.accesorios.includes(exp.accesorio.id)) estado.accesorios.push(exp.accesorio.id);
+    estado.accesorioActivo = exp.accesorio.id;
+    darXP(150);
+    guardar();
+  }
+  if (gano) {
+    return '<div class="card recompensa"><div style="margin-bottom:6px">' + lucioSVG(120) + '</div>' +
+      '<h2 style="margin-bottom:8px;">¡Sello de ' + esc(exp.destino) + ' conseguido! ' + exp.emoji + '</h2>' +
+      '<p style="font-size:.9rem;">Superaste el desafío con ' + juego.vidas + (juego.vidas === 1 ? " vida" : " vidas") + ' de sobra.</p>' +
+      '<p style="font-size:.9rem;margin-top:4px;">Lucio desbloqueó: <b>' + esc(exp.accesorio.nombre) + '</b> — y ya se la puso.</p>' +
+      '<span class="xp-ganado">+150 xp</span>' +
+      '<button class="btn btn-primario" style="margin-top:16px;" onclick="irA(\'pasaporte\')">Ver mi pasaporte 📔</button></div>';
+  }
+  return '<div class="card recompensa"><div class="grande">😿</div>' +
+    '<h2 style="margin-bottom:8px;">El Shōgun ganó esta vez</h2>' +
+    '<p style="font-size:.9rem;color:var(--tinta-suave);">Lucio dice que hasta los mejores exploradores caen. Repasa las excavaciones y vuelve.</p>' +
+    '<button class="btn btn-primario" style="margin-top:14px;" onclick="jugarDesafio()">↺ Reintentar</button>' +
+    '<button class="btn btn-secundario" onclick="irA(\'semana\')">Repasar la expedición</button></div>';
+}
+
+/* ================= Vista Expedición (mapa) ================= */
+function vistaSemana(exp) {
+  let html = cardExp(exp);
+  const paradas = [];
+  paradas.push({ nombre: "Prólogo", sub: window.PROLOGO.titulo, icono: estado.prologo ? "✅" : "🐾", abierta: true, hecha: estado.prologo, accion: "jugarPrologo()" });
+  exp.dias.forEach((d, i) => {
+    const m = estado.misiones[kMision(exp, i)] || {};
+    paradas.push({ nombre: DIAS_NOMBRE[i] + " · Misión " + (i + 1), sub: d.titulo, icono: !abierta(exp, i) ? "🔒" : m.completada ? "✅" : "🎒", abierta: abierta(exp, i), hecha: !!m.completada, accion: "verDia(" + i + ")" });
+  });
+  const sello = estado.sellos.some(s => s.expId === exp.id);
+  paradas.push({ nombre: "Sábado · Desafío final", sub: exp.desafio.titulo, icono: !abierta(exp, 5) ? "🔒" : sello ? "✅" : "⚔️", abierta: abierta(exp, 5), hecha: sello, accion: "verDia(5)" });
+  paradas.push({ nombre: "Domingo · Campamento", sub: "Documental, anime, música y un libro", icono: !abierta(exp, 6) ? "🔒" : "🏕️", abierta: abierta(exp, 6), hecha: false, accion: "verDia(6)" });
+  paradas.forEach((p, pi) => {
+    if (pi > 0) html += '<div class="conector"></div>';
+    html += '<div class="parada' + (p.abierta ? "" : " bloqueada") + (p.hecha ? " hecha" : "") + '"' + (p.abierta ? ' onclick="' + p.accion + '"' : "") + '>' +
+      '<div class="icono">' + p.icono + '</div>' +
+      '<div class="info"><div class="nombre">' + esc(p.nombre) + '</div><div class="sub">' + esc(p.sub) + '</div></div></div>';
+  });
+  return html;
+}
+function verDia(i) { vista = "hoy"; diaVisto = i; juego = null; render(); window.scrollTo(0, 0); }
+
+/* ================= Pasaporte ================= */
 function vistaPasaporte() {
-  const packs = window.SENSEI_PACKS || [];
-  let capsulas = Object.values(estado.leidas).filter(Boolean).length;
-  let html = '<div class="pasaporte-head"><h2>📔 Pasaporte de Cami</h2><p>Coleccionista de hobbies desde 2026</p></div>';
+  let html = '<div style="text-align:center;padding:6px 0 16px;">' +
+    '<div style="display:flex;justify-content:center;">' + lucioSVG(120) + '</div>' +
+    '<h2 style="font-size:1.4rem;margin-top:6px;">📔 Pasaporte de Cami</h2>' +
+    '<p style="font-size:.85rem;color:var(--tinta-suave);">' + nombreNivel() + ' · ' + estado.xp + ' xp totales</p></div>';
   html += '<div class="stats">' +
     '<div class="stat"><div class="n">🔥 ' + estado.racha.n + '</div><div class="l">racha</div></div>' +
-    '<div class="stat"><div class="n">' + capsulas + '</div><div class="l">cápsulas</div></div>' +
-    '<div class="stat"><div class="n">' + estado.insignias.length + '</div><div class="l">insignias</div></div></div>';
+    '<div class="stat"><div class="n">' + estado.souvenirs.length + '</div><div class="l">souvenirs</div></div>' +
+    '<div class="stat"><div class="n">' + estado.sellos.length + '</div><div class="l">sellos</div></div></div>';
 
-  // Sellos por tema explorado
-  let sellos = "";
-  packs.forEach(p => {
-    ["A", "B"].forEach(trackId => {
-      const t = p.tracks[trackId];
-      const leidas = t.dias.filter((_, i) => estado.leidas[claveLeida(p, trackId, i)]).length;
-      const kq = p.id + ":" + trackId;
-      const quizOk = estado.quiz[kq] && estado.quiz[kq].pasado;
-      if (leidas === 0 && !quizOk) return;
-      const nivel = quizOk ? "Conocedora ✨" : leidas >= 5 ? "Aprendiz" : "Curiosa";
-      const prog = Math.round(((leidas + (quizOk ? 1 : 0)) / 6) * 100);
-      sellos += '<div class="sello"><div class="emoji">' + t.emoji + '</div>' +
-        '<div class="detalle"><div class="nombre">' + esc(t.tema) + '</div>' +
-        '<div class="nivel">' + nivel + ' · ' + leidas + '/5 cápsulas' + (quizOk ? " · quiz ✓" : "") + '</div>' +
-        '<div class="barra"><div style="width:' + prog + '%"></div></div></div>' +
-        (quizOk ? '<div class="insignia-tag">🏅</div>' : "") + '</div>';
-    });
+  html += '<div class="card"><div class="etiqueta">👒 Guardarropa de Lucio</div><div class="ropero">';
+  Object.keys(ACCESORIOS).forEach(id => {
+    const tiene = estado.accesorios.includes(id);
+    const activo = estado.accesorioActivo === id;
+    html += '<div class="traje' + (activo ? " activo" : "") + (tiene ? "" : " bloqueado") + '"' + (tiene ? ' onclick="vestir(\'' + id + '\')"' : "") + '>' +
+      lucioSVG(64, id) + '<div class="t">' + (tiene ? esc(ACCESORIOS[id]) : "🔒 Por desbloquear") + '</div></div>';
   });
-  html += '<div class="card">' + (sellos || '<div class="vacio" style="padding:16px;"><div class="grande">🌱</div>Tu colección empieza con la primera cápsula…</div>') + '</div>';
+  html += '</div></div>';
 
-  if (estado.insignias.length) {
-    html += '<div class="card"><div class="etiqueta" style="font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tinta-suave);margin-bottom:10px;">🏅 Insignias ganadas</div>';
-    estado.insignias.forEach(b => {
-      html += '<div class="sello"><div class="emoji">' + b.emoji + '</div><div class="detalle"><div class="nombre">' + esc(b.nombre) + '</div><div class="nivel">' + esc(b.tema) + ' · ' + b.fecha + '</div></div></div>';
+  if (estado.sellos.length) {
+    html += '<div class="card"><div class="etiqueta">🛂 Sellos de destino</div>';
+    estado.sellos.forEach(s => {
+      html += '<div style="display:flex;align-items:center;gap:12px;padding:6px 0;"><span style="font-size:1.6rem;">' + s.emoji + '</span><div><div style="font-weight:700;font-size:.92rem;">' + esc(s.destino) + '</div><div style="font-size:.76rem;color:var(--tinta-suave);">' + s.fecha + '</div></div></div>';
     });
+    html += '</div>';
+  }
+
+  html += '<div class="card"><div class="etiqueta">🧳 Souvenirs</div>';
+  if (estado.souvenirs.length) {
+    html += '<div class="souvenir-grid">';
+    estado.souvenirs.forEach(s => { html += '<div class="souvenir"><div class="e">' + s.emoji + '</div><div class="t">' + esc(s.nombre) + '</div></div>'; });
+    html += '</div>';
+  } else html += '<p style="font-size:.85rem;color:var(--tinta-suave);">Tu maleta está vacía… por ahora. Juega la primera misión.</p>';
+  html += '</div>';
+
+  if (estado.insigniasV1.length) {
+    html += '<div class="card"><div class="etiqueta">🏅 Insignias de la era pre-Lucio</div>';
+    estado.insigniasV1.forEach(b => { html += '<div style="display:flex;align-items:center;gap:12px;padding:6px 0;"><span style="font-size:1.4rem;">' + b.emoji + '</span><div><div style="font-weight:700;font-size:.9rem;">' + esc(b.nombre) + '</div><div style="font-size:.76rem;color:var(--tinta-suave);">' + esc(b.tema) + ' · ' + b.fecha + '</div></div></div>'; });
     html += '</div>';
   }
   return html;
 }
+function vestir(id) { estado.accesorioActivo = id; guardar(); render(); }
 
-/* ============ Inicio ============ */
+/* ================= Inicio ================= */
 actualizarRacha();
 render();
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
