@@ -226,13 +226,19 @@ function actualizarRacha() {
 /* ================= Expedición ================= */
 function expActual() {
   const exps = (window.EXPEDICIONES || []).slice().sort((a, b) => b.inicio.localeCompare(a.inicio));
-  const t = hoy();
-  for (const x of exps) { const ini = parseFecha(x.inicio); if (t >= ini && diasEntre(ini, t) <= 6) return x; }
-  for (const x of exps) if (t >= parseFecha(x.inicio)) return x;
-  return exps[exps.length - 1] || null;
+  return exps[0] || null;
 }
-function idxHoy(exp) { return diasEntre(parseFecha(exp.inicio), hoy()); }
-function abierta(exp, i) { return DEMO || idxHoy(exp) >= i; }
+function abierta(exp, i) {
+  if (DEMO) return true;
+  if (i === 0) return estado.prologo;
+  if (i <= 4) return !!(estado.misiones[kMision(exp, i - 1)] || {}).completada;
+  return exp.dias.every((_, di) => (estado.misiones[kMision(exp, di)] || {}).completada);
+}
+function paradaActual(exp) {
+  for (let i = 0; i < 5; i++) if (!(estado.misiones[kMision(exp, i)] || {}).completada) return i;
+  if (!estado.sellos.some(s => s.expId === exp.id)) return 5;
+  return 6;
+}
 function kMision(exp, i) { return exp.id + ":" + i; }
 function mision(exp, i) { const k = kMision(exp, i); estado.misiones[k] = estado.misiones[k] || {}; return estado.misiones[k]; }
 
@@ -292,8 +298,6 @@ function cardExp(exp) {
 
 /* ================= Vista Hoy ================= */
 function vistaHoy(exp) {
-  const idx = idxHoy(exp);
-  let i = (diaVisto !== null) ? diaVisto : Math.min(Math.max(idx, 0), 6);
   let html = cardExp(exp);
 
   if (!estado.prologo) {
@@ -301,20 +305,12 @@ function vistaHoy(exp) {
       '<h2 style="font-size:1.2rem;margin-bottom:6px;">Lucio quiere decirte algo…</h2>' +
       '<p style="font-size:.88rem;color:var(--tinta-suave);margin-bottom:14px;">Tu gato lleva años guardando un secreto. Escúchalo antes de partir.</p>' +
       '<button class="btn btn-primario" onclick="jugarPrologo()">▶ Jugar el prólogo</button></div>';
-    if (!DEMO && idx < 0) return html;
+    if (!DEMO) return html;
   }
 
-  if (!DEMO && idx < 0) {
-    const faltan = -idx;
-    html += '<div class="vacio"><div class="grande">🧳</div>La expedición a ' + esc(exp.destino) + ' sale en ' + faltan + (faltan === 1 ? " día" : " días") + '.<br>Lucio ya empacó las sardinas.</div>';
-    return html;
-  }
-  if (!DEMO && idx > 6 && diaVisto === null) {
-    html += '<div class="vacio"><div class="grande">🎉</div>Expedición completada. Lucio está planeando el próximo destino…<br><br>Repasa el viaje en 🗺️.</div>';
-    return html;
-  }
+  let i = (diaVisto !== null) ? diaVisto : paradaActual(exp);
   if (!abierta(exp, i)) {
-    html += '<div class="vacio"><div class="grande">🔒</div>Esta parada se abre el ' + DIAS_NOMBRE[i].toLowerCase() + '. Los gatos sabemos esperar. Tú también puedes.</div>';
+    html += '<div class="vacio"><div class="grande">🔒</div>' + (i === 5 ? 'El desafío final se abre al completar las 5 misiones.' : 'Esta parada se abre al completar la misión anterior.') + '<br>A tu ritmo: puedes jugar varias hoy o una por día.</div>';
     return html;
   }
   if (i <= 4) return html + cardMision(exp, i);
@@ -325,7 +321,7 @@ function vistaHoy(exp) {
 function cardMision(exp, i) {
   const d = exp.dias[i];
   const m = mision(exp, i);
-  let html = '<div class="card"><span class="chip">' + DIAS_NOMBRE[i] + ' · Misión ' + (i + 1) + ' de 5</span>' +
+  let html = '<div class="card"><span class="chip">Misión ' + (i + 1) + ' de 5</span>' +
     '<h2 style="font-size:1.3rem;margin-bottom:10px;">' + esc(d.titulo) + '</h2>';
   if (!m.completada) {
     html += '<p style="font-size:.88rem;color:var(--tinta-suave);margin-bottom:14px;">Una misión jugable de ~5 minutos con Lucio. Al completarla ganas XP y el souvenir del día: ' + d.souvenir.emoji + '</p>' +
@@ -342,7 +338,7 @@ function cardMision(exp, i) {
 function cardDesafio(exp) {
   const df = exp.desafio;
   const pasado = estado.sellos.some(s => s.expId === exp.id);
-  let html = '<div class="card"><span class="chip">Sábado · Desafío final</span>' +
+  let html = '<div class="card"><span class="chip">Desafío final</span>' +
     '<h2 style="font-size:1.3rem;margin-bottom:10px;">' + esc(df.titulo) + '</h2>';
   if (pasado) {
     html += '<div class="recompensa"><div class="grande">' + exp.emoji + '</div><p style="font-weight:700;">¡Sello de ' + esc(exp.destino) + ' conseguido!</p>' +
@@ -357,7 +353,7 @@ function cardDesafio(exp) {
 
 function cardCampamento(exp) {
   const b = exp.biblioteca;
-  let html = '<div class="card"><span class="chip">Domingo · Campamento</span>' +
+  let html = '<div class="card"><span class="chip">Campamento</span>' +
     '<h2 style="font-size:1.25rem;margin-bottom:8px;">La fogata de Lucio</h2>' +
     '<p style="font-size:.88rem;color:var(--tinta-suave);margin-bottom:14px;">' + esc(b.nota) + '</p>';
   b.items.forEach(it => {
@@ -366,6 +362,7 @@ function cardCampamento(exp) {
       '<div style="font-weight:700;font-size:.92rem;margin:2px 0;">' + esc(it.titulo) + '</div>' +
       '<div style="font-size:.84rem;">' + esc(it.nota) + '</div></div>';
   });
+  html += '<p style="font-size:.82rem;color:var(--tinta-suave);text-align:center;margin-top:12px;">🧳 Lucio anuncia el próximo destino cada lunes.</p>';
   return html + '</div>';
 }
 
@@ -653,11 +650,11 @@ function vistaSemana(exp) {
   paradas.push({ nombre: "Prólogo", sub: window.PROLOGO.titulo, icono: estado.prologo ? "✅" : "🐾", abierta: true, hecha: estado.prologo, accion: "jugarPrologo()" });
   exp.dias.forEach((d, i) => {
     const m = estado.misiones[kMision(exp, i)] || {};
-    paradas.push({ nombre: DIAS_NOMBRE[i] + " · Misión " + (i + 1), sub: d.titulo, icono: !abierta(exp, i) ? "🔒" : m.completada ? "✅" : "🎒", abierta: abierta(exp, i), hecha: !!m.completada, accion: "verDia(" + i + ")" });
+    paradas.push({ nombre: "Misión " + (i + 1), sub: d.titulo, icono: !abierta(exp, i) ? "🔒" : m.completada ? "✅" : "🎒", abierta: abierta(exp, i), hecha: !!m.completada, accion: "verDia(" + i + ")" });
   });
   const sello = estado.sellos.some(s => s.expId === exp.id);
-  paradas.push({ nombre: "Sábado · Desafío final", sub: exp.desafio.titulo, icono: !abierta(exp, 5) ? "🔒" : sello ? "✅" : "⚔️", abierta: abierta(exp, 5), hecha: sello, accion: "verDia(5)" });
-  paradas.push({ nombre: "Domingo · Campamento", sub: "Documental, anime, música y un libro", icono: !abierta(exp, 6) ? "🔒" : "🏕️", abierta: abierta(exp, 6), hecha: false, accion: "verDia(6)" });
+  paradas.push({ nombre: "Desafío final", sub: exp.desafio.titulo, icono: !abierta(exp, 5) ? "🔒" : sello ? "✅" : "⚔️", abierta: abierta(exp, 5), hecha: sello, accion: "verDia(5)" });
+  paradas.push({ nombre: "Campamento", sub: "Documental, anime, música y un libro", icono: !abierta(exp, 6) ? "🔒" : "🏕️", abierta: abierta(exp, 6), hecha: false, accion: "verDia(6)" });
   paradas.forEach((p, pi) => {
     if (pi > 0) html += '<div class="conector"></div>';
     html += '<div class="parada' + (p.abierta ? "" : " bloqueada") + (p.hecha ? " hecha" : "") + '"' + (p.abierta ? ' onclick="' + p.accion + '"' : "") + '>' +

@@ -36,7 +36,7 @@ Cada domingo/lunes, en una sesión de Claude Code sobre esta carpeta:
 
 Claude agrega la expedición al inicio del array en `expediciones.js`, sube `VERSION` en `sw.js` y hace push al repo. Cami recibe el destino nuevo automáticamente al abrir la app.
 
-## Cómo funciona el desbloqueo
-- Cada expedición tiene `inicio` (el lunes de su semana). La parada del día `i` se abre cuando `hoy >= inicio + i` (`?demo=1` abre todo).
-- Lun–Vie: misiones · Sáb: desafío final · Dom: campamento/biblioteca.
+## Cómo funciona el desbloqueo (por progreso, desde 2026-07-04)
+- **A su ritmo**: la misión N se abre al completar la N-1 (la 1 se abre con el prólogo). El desafío se abre con las 5 misiones; el campamento, con el desafío. `?demo=1` abre todo.
+- Sin candados por calendario: puede jugarse la expedición entera en un día o repartirla en la semana. La expedición activa es siempre la más reciente del array; la nueva se publica cada domingo/lunes.
 - La racha 🔥 cuenta días consecutivos abriendo la app. El progreso V1 se migra a XP automáticamente la primera vez.
