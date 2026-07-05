@@ -15,7 +15,10 @@ PWA estática de costo $0, ahora en formato videojuego. Sin backend, sin API key
 ## Estructura de una expedición (V2)
 Cada semana = un destino. Por día (L–V): `escenas` (nodos de diálogo con `decision`/`id`/`salta` para ramificar), `minijuego` (`parejas` u `orden`), `excavacion` (2 hallazgos profundos, +15 xp c/u), `charla` (preguntas estilo RPG con `extra` de seguimiento, +10 xp c/u) y `souvenir`. Sábado: `desafio` (8 preguntas, 3 vidas → sello + accesorio para Lucio). Domingo: `biblioteca` (documental, anime, música, libro). El `PROLOGO` se juega una sola vez.
 
-**Economía:** misión 80 xp + bono de prueba (40 perfecta / 25 con ≤2 errores / 15). Nivel cada 300 xp. Accesorios de Lucio: `panoleta` (prólogo), `kasa` (Japón) — agregar el dibujo del accesorio nuevo en `lucioSVG()` y su nombre en `ACCESORIOS` al crear una expedición con accesorio nuevo.
+**Economía:** misión 80 xp + bono de prueba (40 perfecta / 25 con ≤2 errores / 15). Página de Dante +50. Regalo de Victoria +10/+25. Nivel cada 300 xp. Accesorios de Lucio: `panoleta` (prólogo), `kasa` (Japón) — agregar el dibujo del accesorio nuevo en `lucioSVG()` y su nombre en `ACCESORIOS` al crear una expedición con accesorio nuevo.
+
+## Módulo "La Manada" (V3)
+Cada expedición debe incluir: `dante: {titulo, historia, consejo}` (la estrella de Dante en el campamento — historia del Gran Explorador en ese destino, tono cálido y heroico, jamás triste); `pagina: {dia, nodo, titulo, texto}` (página de la bitácora de Dante escondida en un nodo de una ruta de decisión — +50 xp, coleccionable hacia la expedición final "Siberia: tras las huellas de Dante"); `datosVictoria: [5 datos]` (pool del regalo diario de Victoria, idealmente con tema animal/perruno del destino). Dibujos: `danteSVG()` (husky negro/crema, ojos azul pálido, estrella dorada) y `victoriaSVG()` (gran danesa negra, collar rojo) en index.html.
 
 ## Probar en local
 Desde `Personal/Ocio/`:

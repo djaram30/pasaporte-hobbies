@@ -272,6 +272,24 @@ window.EXPEDICIONES = [
         { q: "La torre Nakagin fracasó principalmente por…", opciones: ["Un error estructural", "Un terremoto", "La gobernanza: 140 dueños nunca coordinaron los reemplazos", "El costo del acero"], correcta: 2 }
       ]
     },
+    dante: {
+      titulo: "Dante y el perro de la estación",
+      historia: "Cuando Dante pasó por Tokio — mucho antes de que yo naciera, cuando el Gran Explorador ya era leyenda entre los animales viajeros — fue directo a la estación de Shibuya. No a tomar un tren: a presentar sus respetos. Ahí está la estatua de Hachikō, el akita que esperó a su humano en esa estación todos los días durante nueve años. Los perros de todo el mundo conocen esa historia. Dante se sentó frente a la estatua toda una tarde, con esa seriedad de husky que tú conociste, y cuando le preguntaron por qué, dijo: 'Porque este país entendió algo importante: a los compañeros de verdad se les construyen estatuas, no despedidas.' Después se fue trotando hacia el norte, a Hokkaido, donde dicen que corrió sobre la nieve como si el frío fuera su idioma natal.",
+      consejo: "Consejo de la bitácora de Dante: 'Deja huellas tan buenas que alguien quiera seguirlas.'"
+    },
+    pagina: {
+      dia: 3,
+      nodo: "objetos",
+      titulo: "Página 1 — Sobre las cicatrices",
+      texto: "«En Kioto vi cómo reparan lo roto con oro y lo aman más que cuando estaba nuevo. Los humanos tardan en aprender eso: creen que amar algo es mantenerlo intacto. Un explorador sabe que no existe camino sin rasguños — existen rasguños contados con orgullo junto al fuego. Que tus grietas sean doradas. — D.»"
+    },
+    datosVictoria: [
+      "En Japón hay templos sintoístas dedicados a los perros: el santuario Musashi Mitake trata a los perros como peregrinos oficiales, con bendición incluida.",
+      "El akita Hachikō esperó a su dueño en la estación de Shibuya durante 9 años. Su estatua es hoy el punto de encuentro más famoso de Tokio.",
+      "En japonés los perros no hacen 'guau': hacen 'wan wan' (ワンワン). Victoria dice que suena más digno.",
+      "Los perros guías de trineo como los huskies pueden correr 240 km en un día. Victoria escuchó esto y prefirió una siesta.",
+      "En la isla de Aoshima y el pueblo de Marugame hay más estatuas y homenajes a perros y gatos que a personas. Prioridades correctas, según la manada."
+    ],
     biblioteca: {
       nota: "Domingo de campamento: Lucio enciende la fogata y deja el equipaje de ida a casa. Esto es para seguir gozando Japón sin agenda.",
       items: [

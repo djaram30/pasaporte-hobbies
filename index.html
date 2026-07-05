@@ -136,6 +136,17 @@
   .excav-card > button { width: 100%; text-align: left; background: var(--papel); border: none; padding: 13px 16px; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; color: var(--tinta); display: flex; justify-content: space-between; gap: 8px; }
   .excav-card .cuerpo { padding: 4px 16px 14px; font-size: .9rem; background: var(--papel-card); }
 
+  /* La Manada */
+  .b-pagina { background: #fdf3d7; border: 1.5px solid var(--dorado); align-self: stretch; max-width: 100%; }
+  .b-pagina .quien { color: #8a6d1a; }
+  .estrella { background: #232946; border: none; color: #f0ecdf; }
+  .estrella .chip { background: #39406b; color: #ffd97a; }
+  .estrella h3 { color: #fff; font-size: 1.15rem; margin-bottom: 10px; }
+  .estrella .consejo { font-style: italic; background: #2d3557; border-radius: 12px; padding: 12px 14px; margin-top: 12px; font-size: .9rem; color: #ffd97a; }
+  .estrella .cielo { text-align: center; letter-spacing: 12px; color: #ffd97a; font-size: .8rem; margin-bottom: 8px; }
+  .victoria-fila { display: flex; gap: 14px; align-items: center; }
+  .victoria-fila .txt { flex: 1; min-width: 0; }
+
   .vacio { text-align: center; padding: 36px 20px; color: var(--tinta-suave); }
   .vacio .grande { font-size: 2.6rem; margin-bottom: 10px; }
 
@@ -189,6 +200,8 @@ function cargar() {
   e.accesorioActivo = e.accesorioActivo || "ninguno";
   e.prologo = e.prologo || false;
   e.insigniasV1 = e.insigniasV1 || [];
+  e.paginas = e.paginas || [];
+  e.regalo = e.regalo || null;
   if (!e.migradoV1) {
     try {
       const v1 = JSON.parse(localStorage.getItem("sensei_estado_v1"));
@@ -264,6 +277,80 @@ function lucioSVG(px, accesorio) {
     extra + '</svg>';
 }
 
+function danteSVG(px) {
+  return '<svg viewBox="0 0 120 130" width="' + px + '" height="' + (px * 130 / 120) + '" role="img" aria-label="Dante, el Gran Explorador">' +
+    '<path d="M60 4 l2.6 6 6.4.6-4.8 4.4 1.4 6.4-5.6-3.4-5.6 3.4 1.4-6.4-4.8-4.4 6.4-.6 Z" fill="#ffd97a"/>' +
+    '<ellipse cx="60" cy="122" rx="34" ry="6" fill="rgba(46,42,36,.08)"/>' +
+    '<path d="M88 92 Q112 88 106 64" stroke="#cfc4ae" stroke-width="10" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="60" cy="94" rx="30" ry="28" fill="#f2e7d3" stroke="#d8ccb4" stroke-width="1.5"/>' +
+    '<path d="M32 84 Q60 62 88 84 L88 78 Q60 58 32 78 Z" fill="#2b2723"/>' +
+    '<path d="M60 70 L48 92 L60 104 L72 92 Z" fill="#2b2723"/>' +
+    '<circle cx="60" cy="52" r="25" fill="#f2e7d3" stroke="#d8ccb4" stroke-width="1.5"/>' +
+    '<path d="M60 27 a25 25 0 0 1 24 18 L66 42 L60 34 L54 42 L36 45 a25 25 0 0 1 24 -18 Z" fill="#2b2723"/>' +
+    '<path d="M58 40 L60 34 L62 40 L60 56 Z" fill="#2b2723"/>' +
+    '<path d="M38 38 L32 16 L50 28 Z" fill="#2b2723"/><path d="M41 34 L38 24 L47 30 Z" fill="#f2e7d3"/>' +
+    '<path d="M82 38 L88 16 L70 28 Z" fill="#2b2723"/><path d="M79 34 L82 24 L73 30 Z" fill="#f2e7d3"/>' +
+    '<circle cx="50" cy="50" r="3.6" fill="#a9cbe8"/><circle cx="50" cy="50" r="1.7" fill="#2b2723"/>' +
+    '<circle cx="70" cy="50" r="3.6" fill="#a9cbe8"/><circle cx="70" cy="50" r="1.7" fill="#2b2723"/>' +
+    '<ellipse cx="60" cy="60" rx="4" ry="3" fill="#2b2723"/>' +
+    '<path d="M60 63 q0 4 -5 5 M60 63 q0 4 5 5" stroke="#2b2723" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
+    '</svg>';
+}
+function victoriaSVG(px) {
+  return '<svg viewBox="0 0 120 130" width="' + px + '" height="' + (px * 130 / 120) + '" role="img" aria-label="Victoria, la guardiana">' +
+    '<ellipse cx="62" cy="122" rx="36" ry="6" fill="rgba(46,42,36,.08)"/>' +
+    '<path d="M96 100 Q114 92 110 72" stroke="#26221f" stroke-width="8" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="64" cy="98" rx="32" ry="26" fill="#26221f"/>' +
+    '<rect x="42" y="52" width="18" height="42" rx="9" fill="#26221f"/>' +
+    '<circle cx="51" cy="40" r="20" fill="#26221f"/>' +
+    '<path d="M35 30 Q28 12 42 20 L46 32 Z" fill="#171412"/>' +
+    '<path d="M67 30 Q74 12 60 20 L56 32 Z" fill="#171412"/>' +
+    '<ellipse cx="51" cy="52" rx="8" ry="6.5" fill="#3a332d"/>' +
+    '<circle cx="44" cy="38" r="3.2" fill="#c9a26a"/><circle cx="44" cy="38" r="1.5" fill="#171412"/>' +
+    '<circle cx="58" cy="38" r="3.2" fill="#c9a26a"/><circle cx="58" cy="38" r="1.5" fill="#171412"/>' +
+    '<ellipse cx="51" cy="50" rx="3.6" ry="2.6" fill="#171412" stroke="#5a5148" stroke-width="1"/>' +
+    '<path d="M51 53 q0 3 -4 4" stroke="#5a5148" stroke-width="1.4" fill="none" stroke-linecap="round"/>' +
+    '<path d="M42 62 h18" stroke="#b8452f" stroke-width="5" stroke-linecap="round"/>' +
+    '<ellipse cx="40" cy="118" rx="9" ry="4.5" fill="#26221f"/><ellipse cx="86" cy="118" rx="9" ry="4.5" fill="#26221f"/>' +
+    '</svg>';
+}
+
+/* ================= Regalo diario de Victoria ================= */
+function generarRegalo(exp) {
+  const h = fechaISO(hoy());
+  if (estado.regalo && estado.regalo.fecha === h) return;
+  if (!estado.prologo) { estado.regalo = null; return; }
+  const paginaPendiente = exp && exp.pagina && !estado.paginas.some(p => p.expId === exp.id);
+  const r = Math.random();
+  let regalo;
+  if (paginaPendiente && r < 0.35) {
+    regalo = { tipo: "pista", titulo: "Victoria olfateó algo…", texto: "Victoria insiste en que en la Misión " + (exp.pagina.dia + 1) + " hay un papel viejo escondido — en un camino que todavía no has tomado. Huele a leyenda.", xp: 10 };
+  } else if (exp && exp.datosVictoria && r < 0.75) {
+    const dato = exp.datosVictoria[Math.floor(Math.random() * exp.datosVictoria.length)];
+    regalo = { tipo: "dato", titulo: "Victoria te trajo un chisme del destino", texto: dato, xp: 10 };
+  } else {
+    regalo = { tipo: "hueso", titulo: "Victoria te trajo su tesoro", texto: "Un hueso de energía, babeado con amor. Victoria espera que lo valores como se debe.", xp: 25 };
+  }
+  regalo.fecha = h; regalo.reclamado = false;
+  estado.regalo = regalo;
+  guardar();
+}
+function cardVictoria() {
+  const r = estado.regalo;
+  if (!r) return "";
+  if (!r.reclamado) {
+    return '<div class="card victoria-fila">' + victoriaSVG(72) +
+      '<div class="txt"><div class="etiqueta" style="margin-bottom:4px;">🐾 Guardiana del campamento</div>' +
+      '<p style="font-size:.9rem;font-weight:700;margin-bottom:8px;">Victoria te está esperando con algo en el hocico.</p>' +
+      '<button class="btn btn-primario" style="padding:10px;" onclick="reclamarRegalo()">Recibir 🦴</button></div></div>';
+  }
+  return '<div class="card victoria-fila">' + victoriaSVG(72) +
+    '<div class="txt"><div class="etiqueta" style="margin-bottom:4px;">🐾 ' + esc(r.titulo) + '</div>' +
+    '<p style="font-size:.86rem;">' + esc(r.texto) + '</p>' +
+    '<p style="font-size:.78rem;color:var(--acento);font-weight:700;margin-top:6px;">+' + r.xp + ' xp · vuelve mañana, siempre trae algo</p></div></div>';
+}
+function reclamarRegalo() { estado.regalo.reclamado = true; darXP(estado.regalo.xp); guardar(); render(); }
+
 /* ================= Render base ================= */
 function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
 function irA(v) { vista = v; diaVisto = null; juego = null; render(); window.scrollTo(0, 0); }
@@ -308,6 +395,7 @@ function vistaHoy(exp) {
     if (!DEMO) return html;
   }
 
+  html += cardVictoria();
   let i = (diaVisto !== null) ? diaVisto : paradaActual(exp);
   if (!abierta(exp, i)) {
     html += '<div class="vacio"><div class="grande">🔒</div>' + (i === 5 ? 'El desafío final se abre al completar las 5 misiones.' : 'Esta parada se abre al completar la misión anterior.') + '<br>A tu ritmo: puedes jugar varias hoy o una por día.</div>';
@@ -353,7 +441,17 @@ function cardDesafio(exp) {
 
 function cardCampamento(exp) {
   const b = exp.biblioteca;
-  let html = '<div class="card"><span class="chip">Campamento</span>' +
+  let html = "";
+  if (exp.dante) {
+    html += '<div class="card estrella"><span class="chip">⭐ La estrella de Dante</span>' +
+      '<div class="cielo">✦ ✧ ✦ ✧ ✦</div>' +
+      '<div style="display:flex;justify-content:center;margin-bottom:10px;">' + danteSVG(92) + '</div>' +
+      '<h3>' + esc(exp.dante.titulo) + '</h3>' +
+      '<p style="font-size:.9rem;">Lucio mira el cielo junto a la fogata: "Mi maestro pasó por aquí una vez. Te cuento…"</p>' +
+      '<p style="font-size:.9rem;margin-top:10px;">' + esc(exp.dante.historia) + '</p>' +
+      '<div class="consejo">' + esc(exp.dante.consejo) + '</div></div>';
+  }
+  html += '<div class="card"><span class="chip">Campamento</span>' +
     '<h2 style="font-size:1.25rem;margin-bottom:8px;">La fogata de Lucio</h2>' +
     '<p style="font-size:.88rem;color:var(--tinta-suave);margin-bottom:14px;">' + esc(b.nota) + '</p>';
   b.items.forEach(it => {
@@ -377,6 +475,12 @@ function avanzarHasta() {
     if (n.salta !== undefined) { juego.i = nodoIdx(n.salta); continue; }
     if (n.decision) { juego.esperando = "decision"; return; }
     juego.historial.push(n);
+    if (!juego.esPrologo && juego.exp && juego.exp.pagina && juego.dia === juego.exp.pagina.dia &&
+        n.id === juego.exp.pagina.nodo && !estado.paginas.some(p => p.expId === juego.exp.id)) {
+      estado.paginas.push({ expId: juego.exp.id, titulo: juego.exp.pagina.titulo, texto: juego.exp.pagina.texto, fecha: fechaISO(hoy()) });
+      darXP(50); guardar();
+      juego.historial.push({ de: "pagina", titulo: juego.exp.pagina.titulo, texto: juego.exp.pagina.texto });
+    }
     juego.esperando = "continuar";
     return;
   }
@@ -393,6 +497,7 @@ function finEscenas() {
       if (!estado.accesorios.includes(window.PROLOGO.accesorio)) estado.accesorios.push(window.PROLOGO.accesorio);
       estado.accesorioActivo = window.PROLOGO.accesorio;
       darXP(window.PROLOGO.xp);
+      generarRegalo(expActual());
     }
     juego = { tipo: "recompensa", titulo: "¡Prólogo completado!", emoji: "✈️", lineas: ["Souvenir: " + window.PROLOGO.souvenir.nombre, "Lucio desbloqueó su pañoleta de exploradora 🧣", "+" + window.PROLOGO.xp + " xp"] };
     guardar(); render(); window.scrollTo(0, 0); return;
@@ -420,6 +525,10 @@ function vistaEscenas() {
     '<div class="escena-lucio">' + lucioSVG(96) + '</div><div class="escena-zona">';
   const ultimos = juego.historial.slice(-4);
   ultimos.forEach(n => {
+    if (n.de === "pagina") {
+      html += '<div class="burbuja b-pagina"><div class="quien">📜 ¡Encontraste una página de la bitácora de Dante! +50 xp</div><b>' + esc(n.titulo) + '</b><br>' + esc(n.texto) + '</div>';
+      return;
+    }
     const clase = n.de === "lucio" ? "b-lucio" : n.de === "cami" ? "b-cami" : "b-npc";
     const quien = n.de === "lucio" ? "Lucio" : n.de === "cami" ? "Tú" : n.nombre;
     html += '<div class="burbuja ' + clase + '"><div class="quien">' + esc(quien) + '</div>' + esc(n.texto) + '</div>';
@@ -693,6 +802,19 @@ function vistaPasaporte() {
     html += '</div>';
   }
 
+  html += '<div class="card"><div class="etiqueta">📜 La bitácora de Dante</div>';
+  if (estado.paginas.length) {
+    estado.paginas.forEach(p => {
+      html += '<div style="background:#fdf3d7;border:1px solid var(--dorado);border-radius:12px;padding:12px 14px;margin-bottom:8px;">' +
+        '<div style="font-weight:700;font-size:.9rem;margin-bottom:4px;">' + esc(p.titulo) + '</div>' +
+        '<div style="font-size:.84rem;font-style:italic;">' + esc(p.texto) + '</div>' +
+        '<div style="font-size:.72rem;color:var(--tinta-suave);margin-top:6px;">Encontrada el ' + p.fecha + '</div></div>';
+    });
+  } else {
+    html += '<div class="victoria-fila">' + danteSVG(64) + '<p style="flex:1;font-size:.85rem;color:var(--tinta-suave);">Las páginas del Gran Explorador están escondidas en los caminos que aún no has tomado. Victoria a veces las olfatea…</p></div>';
+  }
+  html += '</div>';
+
   html += '<div class="card"><div class="etiqueta">🧳 Souvenirs</div>';
   if (estado.souvenirs.length) {
     html += '<div class="souvenir-grid">';
@@ -712,6 +834,7 @@ function vestir(id) { estado.accesorioActivo = id; guardar(); render(); }
 
 /* ================= Inicio ================= */
 actualizarRacha();
+generarRegalo(expActual());
 render();
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   navigator.serviceWorker.register("sw.js").catch(() => {});
