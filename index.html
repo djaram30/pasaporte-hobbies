@@ -136,6 +136,11 @@
   .excav-card > button { width: 100%; text-align: left; background: var(--papel); border: none; padding: 13px 16px; font-family: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; color: var(--tinta); display: flex; justify-content: space-between; gap: 8px; }
   .excav-card .cuerpo { padding: 4px 16px 14px; font-size: .9rem; background: var(--papel-card); }
 
+  /* Láminas (ilustraciones) */
+  .lamina { background: var(--papel-card); border: 1.5px solid var(--borde); border-radius: 14px; padding: 12px; margin: 0 0 12px; animation: aparecer .35s ease; }
+  .lamina svg { display: block; width: 100%; height: auto; }
+  .lamina .pie { font-size: .76rem; color: var(--tinta-suave); text-align: center; margin-top: 8px; font-style: italic; }
+
   /* La Manada */
   .b-pagina { background: #fdf3d7; border: 1.5px solid var(--dorado); align-self: stretch; max-width: 100%; }
   .b-pagina .quien { color: #8a6d1a; }
@@ -180,7 +185,7 @@ const CLAVE = "lucio_estado_v2";
 const DEMO = new URLSearchParams(location.search).has("demo");
 const DIAS_NOMBRE = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 const NIVELES = ["Curiosa", "Aprendiz de viajera", "Trotamundos", "Exploradora", "Cartógrafa", "Gran Expedicionaria", "Leyenda del Pasaporte"];
-const ACCESORIOS = { ninguno: "Al natural", panoleta: "Pañoleta de exploradora", kasa: "Kasa de paja japonesa" };
+const ACCESORIOS = { ninguno: "Al natural", panoleta: "Pañoleta de exploradora", kasa: "Kasa de paja japonesa", fez: "Fez granate de Marrakech" };
 const XP_NIVEL = 300;
 
 let estado = cargar();
@@ -261,6 +266,7 @@ function lucioSVG(px, accesorio) {
   let extra = "";
   if (a === "panoleta") extra = '<path d="M38 74 Q60 88 82 74 L60 96 Z" fill="#c0392b"/><path d="M38 74 Q60 86 82 74" stroke="#96281b" stroke-width="2" fill="none"/>';
   if (a === "kasa") extra = '<path d="M18 38 L60 8 L102 38 Q60 50 18 38 Z" fill="#d9b45c" stroke="#b6913d" stroke-width="2"/><path d="M60 8 L60 20" stroke="#b6913d" stroke-width="2"/>';
+  if (a === "fez") extra = '<path d="M42 26 L46 6 L74 6 L78 26 Q60 32 42 26 Z" fill="#96281b"/><path d="M74 6 Q84 10 80 22" stroke="#d4a017" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="80" cy="23" r="3.5" fill="#d4a017"/>';
   return '<svg viewBox="0 0 120 120" width="' + px + '" height="' + px + '" role="img" aria-label="Lucio">' +
     '<ellipse cx="60" cy="112" rx="34" ry="6" fill="rgba(46,42,36,.08)"/>' +
     '<path d="M88 78 Q112 74 108 52" stroke="#e88f3c" stroke-width="9" fill="none" stroke-linecap="round"/>' +
@@ -532,6 +538,7 @@ function vistaEscenas() {
     const clase = n.de === "lucio" ? "b-lucio" : n.de === "cami" ? "b-cami" : "b-npc";
     const quien = n.de === "lucio" ? "Lucio" : n.de === "cami" ? "Tú" : n.nombre;
     html += '<div class="burbuja ' + clase + '"><div class="quien">' + esc(quien) + '</div>' + esc(n.texto) + '</div>';
+    if (n.lamina) html += '<div class="lamina">' + n.lamina.svg + '<div class="pie">' + esc(n.lamina.pie) + '</div></div>';
   });
   html += '</div>';
   if (juego.esperando === "decision") {
@@ -648,7 +655,7 @@ function vistaExcavacion() {
     const abierta = juego.abiertas.includes(si);
     const leida = m.excav.includes(si);
     html += '<div class="excav-card"><button onclick="toggleExcav(' + si + ')"><span>' + (leida ? "✓ " : "") + esc(s.titulo) + '</span><span>' + (abierta ? "▾" : "▸") + '</span></button>';
-    if (abierta) html += '<div class="cuerpo">' + esc(s.texto) + '</div>';
+    if (abierta) html += '<div class="cuerpo">' + (s.lamina ? '<div class="lamina" style="margin-top:10px;">' + s.lamina.svg + '<div class="pie">' + esc(s.lamina.pie) + '</div></div>' : "") + esc(s.texto) + '</div>';
     html += '</div>';
   });
   html += '<button class="btn btn-secundario" onclick="juego=null;render();window.scrollTo(0,0)">← Volver</button></div>';
